@@ -1,6 +1,6 @@
 # Protocol::Redis
 
-Implements the RESP2 and future redis protocols.
+Implements the RESP2 and [RESP3](https://github.com/antirez/RESP3) Redis protocols.
 
 [![Build Status](https://travis-ci.com/socketry/protocol-redis.svg?branch=master)](https://travis-ci.com/socketry/protocol-redis)
 
@@ -22,7 +22,16 @@ Or install it yourself as:
 
 ## Usage
 
-...
+```ruby
+sockets = Socket.pair(Socket::PF_UNIX, Socket::SOCK_STREAM)
+
+client = Protocol::Redis::Connection.new(sockets.first)
+server = Protocol::Redis::Connection.new(sockets.last)
+
+client.write_object("Hello World!")
+puts server.read_object
+# => "Hello World!"
+```
 
 ## Contributing
 
