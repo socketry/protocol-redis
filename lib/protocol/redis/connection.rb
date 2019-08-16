@@ -81,7 +81,8 @@ module Protocol
 			end
 			
 			def read_object
-				line = read_line
+				line = read_line or raise EOFError
+				
 				token = line.slice!(0, 1)
 				
 				case token
