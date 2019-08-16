@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'async/io/protocol/line'
+require_relative 'error'
 
 module Protocol
 	module Redis
@@ -49,7 +49,7 @@ module Protocol
 			
 			# The redis server doesn't want actual objects (e.g. integers) but only bulk strings. So, we inline it for performance.
 			def write_request(arguments)
-				write_lines("*#{arguments.count}")
+				write_lines("*#{arguments.size}")
 				
 				arguments.each do |argument|
 					string = argument.to_s
