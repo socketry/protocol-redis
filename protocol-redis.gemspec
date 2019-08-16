@@ -17,7 +17,6 @@ Gem::Specification.new do |spec|
 	spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
 	spec.require_paths = ["lib"]
 	
-	spec.add_development_dependency "async-rspec", "~> 1.1"
 	spec.add_development_dependency "benchmark-ips"
 
 	spec.add_development_dependency "covered"

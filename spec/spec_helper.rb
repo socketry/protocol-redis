@@ -1,6 +1,5 @@
 
 require 'covered/rspec'
-require 'async/rspec'
 
 if RUBY_VERSION < "2.4.0"
 	require_relative "extensions/chomp"
