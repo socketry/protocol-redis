@@ -27,8 +27,10 @@ module Protocol
 	module Redis
 		module Methods
 			module Keys
-				def del(key, *keys)
-					return call('DEL', key, *keys)
+				def del(*keys)
+					if keys.any?
+						return call('DEL', *keys)
+					end
 				end
 				
 				def dump(key)
@@ -45,8 +47,8 @@ module Protocol
 				
 				def expireat(key, time)
 					case time
-					when DateTime, Time, Date 
-						timestamp =  time.strftime('%s').to_i
+					when DateTime, Time, Date
+						timestamp = time.strftime('%s').to_i
 					else
 						timestamp = time
 					end
@@ -58,16 +60,33 @@ module Protocol
 					return call('KEYS', pattern)
 				end
 				
-				def migrate
+				# MIGRATE host port key|"" destination-db timeout [COPY] [REPLACE] [AUTH password] [KEYS key [key ...]]
+				def migrate(host, port, destination = 0, keys:, timeout: 0, copy: false, replace: false, auth: nil, )
+					raise ArgumentError, "Must provide keys" if keys.empty?
 					
+					arguments = [host, port]
+					
+					if keys.size == 1
+						arguments.append(*keys)
+					else
+						arguments.append("")
+					end
+					
+					arguments.append(destination, timeout)
+					
+					if keys.size > 1
+						arguments.append("KEYS", *keys)
+					end
+					
+					return call("MIGRATE", *arguments)
 				end
 				
 				def move(key, db)
 					return call('MOVE', key, db)
 				end
 				
-				def object
-					
+				def object(subcommand, *arguments)
+					call('OBJECT', subcommand, *arguments)
 				end
 				
 				def persist(key)
@@ -109,8 +128,54 @@ module Protocol
 					return call('RESTORE', key, ttl, serialized_value)
 				end
 				
-				def sort
+				# SCAN cursor [MATCH pattern] [COUNT count] [TYPE type]
+				def scan(cursor, match: nil, count: nil, type: nil)
+					arguments = [cursor]
 					
+					if match
+						arguments.append("MATCH", match)
+					end
+					
+					if count
+						arguments.append("COUNT", count)
+					end
+					
+					if type
+						arguments.append("TYPE", type)
+					end
+					
+					return call("SCAN", *arguments)
+				end
+				
+				# https://redis.io/commands/sort
+				def sort(key, by: nil, offset: nil, count: nil, get: nil, order: 'ASC', alpha: false, store: nil)
+					arguments = []
+					
+					if by
+						arguments.append("BY", by)
+					end
+					
+					if offset and count
+						arguments.append("LIMIT", offset, count)
+					end
+					
+					get&.each do |pattern|
+						arguments.append("GET", pattern)
+					end
+					
+					if order
+						arguments.append(order)
+					end
+					
+					if alpha
+						arguments.append("ALPHA")
+					end
+					
+					if store
+						arguments.append("STORE", store)
+					end
+					
+					return call('SORT', *arguments)
 				end
 				
 				def touch(key, *keys)
@@ -129,12 +194,8 @@ module Protocol
 					return call('UNLINK', key)
 				end
 					
-				def wait(newreplicas, timeout)
-					
-				end
-				
-				def scan
-					
+				def wait(newreplicas, timeout = 0)
+					return call("WAIT", numreplicas, timeout)
 				end
 			end
 		end

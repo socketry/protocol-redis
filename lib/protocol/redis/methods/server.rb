@@ -42,7 +42,7 @@ module Protocol
 				end
 				
 				def flushdb!
-					call 'FLUSHDB'
+					return call('FLUSHDB')
 				end
 			end
 		end
