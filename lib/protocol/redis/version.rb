@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright, 2018, by Samuel G. D. Williams. <http://www.codeotaku.com>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,6 +22,6 @@
 
 module Protocol
 	module Redis
-		VERSION = "0.2.0"
+		VERSION = "0.3.0"
 	end
 end
