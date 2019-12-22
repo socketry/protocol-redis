@@ -29,9 +29,15 @@ module Protocol
 			
 			def initialize(stream)
 				@stream = stream
+				
+				# Number of requests sent:
+				@count = 0
 			end
 			
 			attr :stream
+			
+			# @attr [Integer] Number of requests sent.
+			attr :count
 			
 			def close
 				@stream.close
@@ -52,6 +58,8 @@ module Protocol
 			# The redis server doesn't want actual objects (e.g. integers) but only bulk strings. So, we inline it for performance.
 			def write_request(arguments)
 				write_lines("*#{arguments.size}")
+				
+				@count += 1
 				
 				arguments.each do |argument|
 					string = argument.to_s
