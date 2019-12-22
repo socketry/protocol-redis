@@ -25,8 +25,9 @@ module Protocol
 	module Redis
 		module Methods
 			module Server
-				# Get info from server.
-				# @return [Hash] the server metadata.
+				# Get information and statistics about the server.
+				# @see https://redis.io/commands/info
+				# @param section [String]
 				def info
 					metadata = {}
 					
@@ -41,6 +42,9 @@ module Protocol
 					return metadata
 				end
 				
+				# Remove all keys from the current database.
+				# @see https://redis.io/commands/flushdb
+				# @param async [Enum]
 				def flushdb!
 					return call('FLUSHDB')
 				end

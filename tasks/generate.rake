@@ -33,7 +33,19 @@ namespace :generate do
 			internet&.close
 		end.wait
 	end
-
+	
+	def normalize(sentence)
+		return nil if sentence.nil?
+		
+		sentence = sentence.strip
+		
+		if sentence.end_with?(".")
+			return sentence
+		else
+			return "#{sentence}."
+		end
+	end
+	
 	task :commands do
 		require 'async/http/internet'
 		require 'json'
@@ -42,6 +54,7 @@ namespace :generate do
 		
 		# There is a bit of a discrepancy between how the groups appear in the JSON and how they appear in the compiled documentation, this is a mapping from `commands.json` to documentation:
 		@groups = {
+			'generic' => 'generic',
 			'string' => 'strings',
 			'list' => 'lists',
 			'set' => 'sets',
@@ -56,7 +69,7 @@ namespace :generate do
 			'stream' => 'streams'
 		}.freeze
 	end
-
+	
 	task :documentation => :commands do
 		@groups.each_pair do |spec_group, group|
 			puts "Processing #{spec_group}..."
@@ -65,6 +78,12 @@ namespace :generate do
 			module_name = group.split('_').collect(&:capitalize).join
 			
 			path = "lib/protocol/redis/methods/#{group}.rb"
+			
+			unless File.exist?(path)
+				puts "Could not find #{path}, skipping!"
+				next
+			end
+			
 			lines = File.readlines(path)
 			
 			group_commands = @commands.select do |command, command_spec|
@@ -92,12 +111,18 @@ namespace :generate do
 					
 					# Remove the comments:
 					lines.slice!(start...offset)
+					
+					summary = [
+						normalize(command_spec[:summary]),
+						normalize(command_spec[:complexity])
+					].compact
+					
 					comments = [
-						"#{command_spec[:summary]}. #{command_spec[:complexity]}",
+						summary.join(' '),
 						"@see https://redis.io/commands/#{command.to_s.downcase}"
 					]
 					
-					command_spec[:arguments].each do |argument|
+					command_spec[:arguments]&.each do |argument|
 						next if argument[:command] or argument[:type].is_a?(Array)
 						comments << "@param #{argument[:name]} [#{argument[:type].capitalize}]"
 					end
