@@ -46,11 +46,20 @@ namespace :generate do
 		end
 	end
 	
+	def module_name(group)
+		group.split('_').collect(&:capitalize).join
+	end
+	
 	task :commands do
 		require 'async/http/internet'
 		require 'json'
 		
 		@commands = fetch_commands
+		
+		@commands.each do |command, command_spec|
+			method_name = command.to_s.downcase.split(/[\s\-_]+/).join('_')
+			command_spec[:method_name] = method_name
+		end
 		
 		# There is a bit of a discrepancy between how the groups appear in the JSON and how they appear in the compiled documentation, this is a mapping from `commands.json` to documentation:
 		@groups = {
@@ -63,19 +72,46 @@ namespace :generate do
 			'connection' => 'connection',
 			'server' => 'server',
 			'scripting' => 'scripting',
-			'hyperloglog' => 'hyper_log_log',
+			'hyperloglog' => 'counting',
 			'cluster' => 'cluster',
-			'geo' => 'geo',
+			'geo' => 'geospatial',
 			'stream' => 'streams'
 		}.freeze
+	end
+	
+	task :methods => :commands do
+		require 'trenni/template'
+		
+		template = Trenni::Template.load_file(File.expand_path("methods.trenni", __dir__))
+		
+		@groups.each_pair do |spec_group, group|
+			puts "Processing #{spec_group}..."
+			
+			path = "lib/protocol/redis/methods/#{group}.rb"
+			
+			if File.exist?(path)
+				puts "File already exists #{path}, skipping!"
+				next
+			end
+			
+			group_commands = @commands.select do |command, command_spec|
+				command_spec[:group] == spec_group
+			end
+			
+			output = template.to_string({
+				module_name: module_name(group),
+				group_commands: group_commands,
+			})
+			
+			File.write(path, output)
+			
+			break
+		end
 	end
 	
 	task :documentation => :commands do
 		@groups.each_pair do |spec_group, group|
 			puts "Processing #{spec_group}..."
-			
-			# CamelCase for the module name
-			module_name = group.split('_').collect(&:capitalize).join
 			
 			path = "lib/protocol/redis/methods/#{group}.rb"
 			
@@ -94,11 +130,8 @@ namespace :generate do
 			
 			group_commands.each do |command, command_spec|
 				puts "\tProcessing #{command}..."
-				method_name = command.to_s.downcase.split(/\s+\-/).join('_')
 				
-				pp command_spec
-				
-				if offset = lines.find_index{|line| line.include?("def #{method_name}")}
+				if offset = lines.find_index{|line| line.include?("def #{command_spec[:method_name]}")}
 					puts "Found #{command} at line #{offset}."
 					
 					/(?<indentation>\s+)def/ =~ lines[offset]
@@ -123,7 +156,7 @@ namespace :generate do
 					]
 					
 					command_spec[:arguments]&.each do |argument|
-						next if argument[:command] or argument[:type].is_a?(Array)
+						next if argument[:command] or argument[:type].nil? or argument[:type].is_a?(Array)
 						comments << "@param #{argument[:name]} [#{argument[:type].capitalize}]"
 					end
 					
