@@ -89,7 +89,7 @@ module Protocol
 				# @param timeout [Integer]
 				# @param copy [Enum]
 				# @param replace [Enum]
-				def migrate(host, port, destination = 0, keys:, timeout: 0, copy: false, replace: false, auth: nil, )
+				def migrate(host, port, destination = 0, keys:, timeout: 0, copy: false, replace: false, auth: nil)
 					raise ArgumentError, "Must provide keys" if keys.empty?
 					
 					arguments = [host, port]
@@ -101,6 +101,18 @@ module Protocol
 					end
 					
 					arguments.append(destination, timeout)
+					
+					if copy
+						arguments.append("COPY")
+					end
+					
+					if replace
+						arguments.append("REPLACE")
+					end
+					
+					if auth
+						arguments.append("AUTH", auth)
+					end
 					
 					if keys.size > 1
 						arguments.append("KEYS", *keys)
