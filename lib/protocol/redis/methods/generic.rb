@@ -26,7 +26,7 @@ require 'date'
 module Protocol
 	module Redis
 		module Methods
-			module Keys
+			module Generic
 				def del(*keys)
 					if keys.any?
 						return call('DEL', *keys)

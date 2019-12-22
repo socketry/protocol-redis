@@ -20,8 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+require_relative 'methods/generic'
+
 require_relative 'methods/hashes'
-require_relative 'methods/keys'
 require_relative 'methods/lists'
 require_relative 'methods/server'
 require_relative 'methods/strings'
@@ -30,8 +31,9 @@ module Protocol
 	module Redis
 		module Methods
 			def self.included(klass)
+				klass.include Methods::Generic
+				
 				klass.include Methods::Hashes
-				klass.include Methods::Keys
 				klass.include Methods::Lists
 				klass.include Methods::Server
 				klass.include Methods::Strings
