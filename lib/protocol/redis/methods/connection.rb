@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright, 2019, by Mikael Henriksson. <http://www.mhenrixon.com>
+# Copyright, 2018, by Samuel G. D. Williams. <http://www.codeotaku.com>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,31 +20,36 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require_relative 'methods/generic'
-require_relative 'methods/connection'
-require_relative 'methods/server'
-require_relative 'methods/geospatial'
-
-require_relative 'methods/counting'
-
-require_relative 'methods/hashes'
-require_relative 'methods/lists'
-require_relative 'methods/strings'
-
 module Protocol
 	module Redis
 		module Methods
-			def self.included(klass)
-				klass.include Methods::Generic
-				klass.include Methods::Connection
-				klass.include Methods::Server
-				klass.include Methods::Geospatial
+			module Connection
+				# Authenticate to the server.
+				# @see https://redis.io/commands/auth
+				# @param password [String]
+				def auth(password)
+					call("AUTH", password)
+				end
 				
-				klass.include Methods::Counting
+				# Echo the given string.
+				# @see https://redis.io/commands/echo
+				# @param message [String]
+				def echo(message)
+					call("ECHO", message)
+				end
 				
-				klass.include Methods::Hashes
-				klass.include Methods::Lists
-				klass.include Methods::Strings
+				# Ping the server.
+				# @see https://redis.io/commands/ping
+				# @param message [String]
+				def ping(message)
+					call("PING", message)
+				end
+				
+				# Close the connection.
+				# @see https://redis.io/commands/quit
+				def quit
+					call("QUIT")
+				end
 			end
 		end
 	end
