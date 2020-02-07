@@ -30,6 +30,7 @@ require_relative 'methods/counting'
 require_relative 'methods/hashes'
 require_relative 'methods/lists'
 require_relative 'methods/strings'
+require_relative 'methods/sorted_sets'
 
 module Protocol
 	module Redis
@@ -44,6 +45,7 @@ module Protocol
 				
 				klass.include Methods::Hashes
 				klass.include Methods::Lists
+				klass.include Methods::SortedSets
 				klass.include Methods::Strings
 			end
 		end
