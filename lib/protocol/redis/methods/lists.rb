@@ -126,7 +126,7 @@ module Protocol
 				# @param count [Integer]
 				# @param element [String]
 				def lrem(key, count, value)
-					return call('LREM', key, count)
+					return call('LREM', key, count, value)
 				end
 				
 				# Set the value of an element in a list by its index. O(N) where N is the length of the list. Setting either the first or the last element of the list is O(1).
