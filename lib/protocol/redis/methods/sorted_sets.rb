@@ -29,15 +29,20 @@ module Protocol
 				# @param key [Key]
 				# @param score [Double]
 				# @param member [String]
-				# @param condition [Enum]
-				# @param change [Enum]
-				# @param increment [Enum]
-				def zadd(key, *args, nx: false, xx: false, ch: false, incr: false)
+				# @param options [Hash]
+				#   - `:xx => true`: Only update elements that already exist (never add elements).
+        #   - `:nx => true`: Don't update already existing elements (always add new elements).
+				#   - `:change => true`: Modify the return value from the number of new elements added,
+				#     to the total number of elements changed; changed elements are new elements added
+				#     and elements already existing for which the score was updated.
+				#   - `:increment => true`: When this option is specified ZADD acts like ZINCRBY;
+				#     only one score-element pair can be specified in this mode.
+				def zadd(key, *args, nx: false, xx: false, change: false, increment: false)
 				  zadd_args = []
 					zadd_args << "NX" if nx
 					zadd_args << "XX" if xx
-					zadd_args << "CH" if ch
-					zadd_args << "INCR" if incr
+					zadd_args << "CH" if change
+					zadd_args << "INCR" if increment
 
 					if args.size == 1 && args[0].is_a?(Array)
 						zadd_args = zadd_args + args[0].flatten
@@ -55,10 +60,11 @@ module Protocol
 				# @param key [Key]
 				# @param start [Integer]
 				# @param stop [Integer]
-				# @param withscores [Enum]
-				def zrange(key, start, stop, withscores: false)
+				# @param options [Hash]
+				#   - `with_scores => true`: Return the scores of the elements together with the elements.
+				def zrange(key, start, stop, with_scores: false)
 					zrange_args = [start, stop]
-					zrange_args << "WITHSCORES" if withscores
+					zrange_args << "WITHSCORES" if with_scores
 
 					call("ZRANGE", key, *zrange_args)
 				end

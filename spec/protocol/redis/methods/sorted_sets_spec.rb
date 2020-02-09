@@ -38,14 +38,14 @@ RSpec.describe Protocol::Redis::Methods::SortedSets do
 		it "can generate correct arguments with options" do
 			expect(object).to receive(:call).with('ZADD', set_name, 'XX', 'CH', 'INCR', timestamp, 'payload')
 			
-			object.zadd(set_name, timestamp, 'payload', xx: true, ch: true, incr: true)
+			object.zadd(set_name, timestamp, 'payload', xx: true, change: true, increment: true)
 		end
 
 		it "can generate correct multiple arguments" do
 			expect(object).to receive(:call)
 			                    .with('ZADD', set_name, 'XX', 'CH', 'INCR', timestamp, 'payload-1', timestamp, 'payload-2')
 			
-			object.zadd(set_name, [[timestamp, 'payload-1'], [timestamp, 'payload-2']], xx: true, ch: true, incr: true)
+			object.zadd(set_name, [[timestamp, 'payload-1'], [timestamp, 'payload-2']], xx: true, change: true, increment: true)
 		end
 	end
 
@@ -59,13 +59,13 @@ RSpec.describe Protocol::Redis::Methods::SortedSets do
 		it "can generate correct arguments with options" do
 			expect(object).to receive(:call).with('ZRANGE', set_name, 0, 0, 'WITHSCORES')
 			
-			object.zrange(set_name, 0, 0, withscores: true)
+			object.zrange(set_name, 0, 0, with_scores: true)
 		end
 	end
 
 	describe '#zrem' do
 		let(:member_name) { 'test_member' }
-		
+
 		it "can generate correct arguments" do
 			expect(object).to receive(:call).with('ZREM', set_name, member_name)
 			
