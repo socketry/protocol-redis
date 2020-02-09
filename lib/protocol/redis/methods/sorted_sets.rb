@@ -32,16 +32,12 @@ module Protocol
 				# @param condition [Enum]
 				# @param change [Enum]
 				# @param increment [Enum]
-				def zadd(key, *args)
-					zadd_options = []
-					if args.last.is_a?(Hash)
-						options = args.pop
-					  zadd_options = ['NX', 'XX', 'CH', 'INCR'].select do |o|
-					    options[o.downcase.to_sym]
-						end
-					end
-
-					zadd_args = ["ZADD", key] + zadd_options
+				def zadd(key, *args, nx: false, xx: false, ch: false, incr: false)
+				  zadd_args = []
+					zadd_args << "NX" if nx
+					zadd_args << "XX" if xx
+					zadd_args << "CH" if ch
+					zadd_args << "INCR" if incr
 
 					if args.size == 1 && args[0].is_a?(Array)
 						zadd_args = zadd_args + args[0].flatten
@@ -51,7 +47,7 @@ module Protocol
 						raise ArgumentError, "wrong number of arguments"
 					end
 
-					call(*zadd_args)
+					call("ZADD", key, *zadd_args)
 				end
 
 				# Return a range of members in a sorted set, by index. O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements returned.
@@ -61,10 +57,10 @@ module Protocol
 				# @param stop [Integer]
 				# @param withscores [Enum]
 				def zrange(key, start, stop, withscores: false)
-					zrange_args = ["ZRANGE", key, start, stop]
+					zrange_args = [start, stop]
 					zrange_args << "WITHSCORES" if withscores
 
-					call(*zrange_args)
+					call("ZRANGE", key, *zrange_args)
 				end
 
 				# Remove one or more members from a sorted set. O(M*log(N)) with N being the number of elements in the sorted set and M the number of elements to be removed.
