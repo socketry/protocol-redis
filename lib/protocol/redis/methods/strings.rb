@@ -30,21 +30,21 @@ module Protocol
 				# @param key [Key]
 				# @param value [String]
 				def append(key, value)
-					return call('APPEND', key, value)
+					call('APPEND', key, value)
 				end
 
 				# Count set bits in a string. O(N).
 				# @see https://redis.io/commands/bitcount
 				# @param key [Key]
 				def bitcount(key, *range)
-					return call('BITCOUNT', key, *range)
+					call('BITCOUNT', key, *range)
 				end
 
 				# Decrement the integer value of a key by one. O(1).
 				# @see https://redis.io/commands/decr
 				# @param key [Key]
 				def decr(key)
-					return call('DECR', key)
+					call('DECR', key)
 				end
 
 				# Decrement the integer value of a key by the given number. O(1).
@@ -52,14 +52,14 @@ module Protocol
 				# @param key [Key]
 				# @param decrement [Integer]
 				def decrby(key, decrement)
-					return call('DECRBY', key, decrement)
+					call('DECRBY', key, decrement)
 				end
 
 				# Get the value of a key. O(1).
 				# @see https://redis.io/commands/get
 				# @param key [Key]
 				def get(key)
-					return call('GET', key)
+					call('GET', key)
 				end
 
 				# Returns the bit value at offset in the string value stored at key. O(1).
@@ -67,7 +67,7 @@ module Protocol
 				# @param key [Key]
 				# @param offset [Integer]
 				def getbit(key, offset)
-					return call('GETBIT', key, offset)
+					call('GETBIT', key, offset)
 				end
 
 				# Get a substring of the string stored at a key. O(N) where N is the length of the returned string. The complexity is ultimately determined by the returned length, but because creating a substring from an existing string is very cheap, it can be considered O(1) for small strings.
@@ -76,7 +76,7 @@ module Protocol
 				# @param start [Integer]
 				# @param end [Integer]
 				def getrange(key, start_index, end_index)
-					return call('GETRANGE', key, start_index, end_index)
+					call('GETRANGE', key, start_index, end_index)
 				end
 
 				# Set the string value of a key and return its old value. O(1).
@@ -84,14 +84,14 @@ module Protocol
 				# @param key [Key]
 				# @param value [String]
 				def getset(key, value)
-					return call('GETSET', key, value)
+					call('GETSET', key, value)
 				end
 
 				# Increment the integer value of a key by one. O(1).
 				# @see https://redis.io/commands/incr
 				# @param key [Key]
 				def incr(key)
-					return call('INCR', key)
+					call('INCR', key)
 				end
 
 				# Increment the integer value of a key by the given amount. O(1).
@@ -99,7 +99,7 @@ module Protocol
 				# @param key [Key]
 				# @param increment [Integer]
 				def incrby(key, increment)
-					return call('INCRBY', key, increment)
+					call('INCRBY', key, increment)
 				end
 
 				# Increment the float value of a key by the given amount. O(1).
@@ -107,28 +107,30 @@ module Protocol
 				# @param key [Key]
 				# @param increment [Double]
 				def incrbyfloat(key, increment)
-					return call('INCRBYFLOAT', key, increment)
+					call('INCRBYFLOAT', key, increment)
 				end
 
 				# Get the values of all the given keys. O(N) where N is the number of keys to retrieve.
 				# @see https://redis.io/commands/mget
 				# @param key [Key]
 				def mget(key, *keys)
-					return call('MGET', key, *keys)
+					call('MGET', key, *keys)
 				end
 
 				# Set multiple keys to multiple values. O(N) where N is the number of keys to set.
 				# @see https://redis.io/commands/mset
 				def mset(pairs)
 					flattened_pairs = pairs.keys.zip(pairs.values).flatten
-					return call('MSET', *flattened_pairs)
+					
+					call('MSET', *flattened_pairs)
 				end
 
 				# Set multiple keys to multiple values, only if none of the keys exist. O(N) where N is the number of keys to set.
 				# @see https://redis.io/commands/msetnx
 				def msetnx(pairs)
 					flattened_pairs = pairs.keys.zip(pairs.values).flatten
-					return call('MSETNX', *flattened_pairs)
+					
+					call('MSETNX', *flattened_pairs)
 				end
 
 				# Set the value and expiration in milliseconds of a key. O(1).
@@ -185,11 +187,12 @@ module Protocol
 				end
 
 				# Set the value of a key, only if the key does not exist. O(1).
+				# @return [Boolean] if the key was set.
 				# @see https://redis.io/commands/setnx
 				# @param key [Key]
 				# @param value [String]
 				def setnx(key, value)
-					call('SETNX', key, value)
+					call('SETNX', key, value) == 1
 				end
 
 				# Overwrite part of a string at key starting at the specified offset. O(1), not counting the time taken to copy the new string in place. Usually, this string is very small so the amortized complexity is O(1). Otherwise, complexity is O(M) with M being the length of the value argument.
