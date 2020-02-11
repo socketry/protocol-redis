@@ -137,7 +137,7 @@ module Protocol
 				# @param milliseconds [Integer]
 				# @param value [String]
 				def psetex(key, milliseconds, value)
-					return set key, value, milliseconds: milliseconds
+					call('PSETEX', key, milliseconds, value)
 				end
 
 				# Set the string value of a key. O(1).
@@ -163,7 +163,7 @@ module Protocol
 						arguments << "NX"
 					end
 
-					return call('SET', key, value, *arguments)
+					call('SET', key, value, *arguments)
 				end
 
 				# Sets or clears the bit at offset in the string value stored at key. O(1).
@@ -172,7 +172,7 @@ module Protocol
 				# @param offset [Integer]
 				# @param value [Integer]
 				def setbit(key, offset, value)
-					return call('SETBIT', key, offset, value)
+					call('SETBIT', key, offset, value)
 				end
 
 				# Set the value and expiration of a key. O(1).
@@ -181,7 +181,7 @@ module Protocol
 				# @param seconds [Integer]
 				# @param value [String]
 				def setex(key, seconds, value)
-					return set key, value, seconds: seconds
+					call('SETEX', key, seconds, value)
 				end
 
 				# Set the value of a key, only if the key does not exist. O(1).
@@ -189,7 +189,7 @@ module Protocol
 				# @param key [Key]
 				# @param value [String]
 				def setnx(key, value)
-					return set key, value, condition: :nx
+					call('SETNX', key, value)
 				end
 
 				# Overwrite part of a string at key starting at the specified offset. O(1), not counting the time taken to copy the new string in place. Usually, this string is very small so the amortized complexity is O(1). Otherwise, complexity is O(M) with M being the length of the value argument.
@@ -198,14 +198,14 @@ module Protocol
 				# @param offset [Integer]
 				# @param value [String]
 				def setrange(key, offset, value)
-					return call('SETRANGE', key, offset, value)
+					call('SETRANGE', key, offset, value)
 				end
 
 				# Get the length of the value stored in a key. O(1).
 				# @see https://redis.io/commands/strlen
 				# @param key [Key]
 				def strlen(key)
-					return call('STRLEN', key)
+					call('STRLEN', key)
 				end
 			end
 		end

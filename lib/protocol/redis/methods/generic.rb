@@ -32,7 +32,7 @@ module Protocol
 				# @param key [Key]
 				def del(*keys)
 					if keys.any?
-						return call('DEL', *keys)
+						call('DEL', *keys)
 					end
 				end
 				
@@ -40,14 +40,14 @@ module Protocol
 				# @see https://redis.io/commands/dump
 				# @param key [Key]
 				def dump(key)
-					return call('DUMP', key)
+					call('DUMP', key)
 				end
 				
 				# Determine if a key exists. O(1).
 				# @see https://redis.io/commands/exists
 				# @param key [Key]
 				def exists(key, *keys)
-					return call('EXISTS', key, *keys)
+					call('EXISTS', key, *keys)
 				end
 				
 				# Set a key's time to live in seconds. O(1).
@@ -55,7 +55,7 @@ module Protocol
 				# @param key [Key]
 				# @param seconds [Integer]
 				def expire(key, seconds)
-					return call('EXPIRE', key, seconds)
+					call('EXPIRE', key, seconds)
 				end
 				
 				# Set the expiration for a key as a UNIX timestamp. O(1).
@@ -70,14 +70,14 @@ module Protocol
 						timestamp = time
 					end
 					
-					return call('EXPIREAT', key, timestamp)
+					call('EXPIREAT', key, timestamp)
 				end
 				
 				# Find all keys matching the given pattern. O(N) with N being the number of keys in the database, under the assumption that the key names in the database and the given pattern have limited length.
 				# @see https://redis.io/commands/keys
 				# @param pattern [Pattern]
 				def keys(pattern)
-					return call('KEYS', pattern)
+					call('KEYS', pattern)
 				end
 				
 				# Atomically transfer a key from a Redis instance to another one. This command actually executes a DUMP+DEL in the source instance, and a RESTORE in the target instance. See the pages of these commands for time complexity. Also an O(N) data transfer between the two instances is performed.
@@ -118,7 +118,7 @@ module Protocol
 						arguments.append("KEYS", *keys)
 					end
 					
-					return call("MIGRATE", *arguments)
+					call("MIGRATE", *arguments)
 				end
 				
 				# Move a key to another database. O(1).
@@ -126,7 +126,7 @@ module Protocol
 				# @param key [Key]
 				# @param db [Integer]
 				def move(key, db)
-					return call('MOVE', key, db)
+					call('MOVE', key, db)
 				end
 				
 				# Inspect the internals of Redis objects. O(1) for all the currently implemented subcommands.
@@ -141,7 +141,7 @@ module Protocol
 				# @see https://redis.io/commands/persist
 				# @param key [Key]
 				def persist(key)
-					return call('PERSIST', key)
+					call('PERSIST', key)
 				end
 				
 				# Set a key's time to live in milliseconds. O(1).
@@ -149,7 +149,7 @@ module Protocol
 				# @param key [Key]
 				# @param milliseconds [Integer]
 				def pexpire(key, milliseconds)
-					return call('PEXPIRE', milliseconds)
+					call('PEXPIRE', milliseconds)
 				end
 				
 				# Set the expiration for a key as a UNIX timestamp specified in milliseconds. O(1).
@@ -164,20 +164,20 @@ module Protocol
 						timestamp = time
 					end
 					
-					return call('PEXPIREAT', key, timestamp)
+					call('PEXPIREAT', key, timestamp)
 				end
 				
 				# Get the time to live for a key in milliseconds. O(1).
 				# @see https://redis.io/commands/pttl
 				# @param key [Key]
 				def pttl(key)
-					return call('PTTL', key)
+					call('PTTL', key)
 				end
 				
 				# Return a random key from the keyspace. O(1).
 				# @see https://redis.io/commands/randomkey
 				def randomkey
-					return call('RANDOMKEY')
+					call('RANDOMKEY')
 				end
 				
 				# Rename a key. O(1).
@@ -185,7 +185,7 @@ module Protocol
 				# @param key [Key]
 				# @param newkey [Key]
 				def rename(key, new_key)
-					return call('RENAME', key, new_key)
+					call('RENAME', key, new_key)
 				end
 				
 				# Rename a key, only if the new key does not exist. O(1).
@@ -193,7 +193,7 @@ module Protocol
 				# @param key [Key]
 				# @param newkey [Key]
 				def renamenx(key, new_key)
-					return call('RENAMENX', key, new_key)
+					call('RENAMENX', key, new_key)
 				end
 				
 				# Create a key using the provided serialized value, previously obtained using DUMP. O(1) to create the new key and additional O(N*M) to reconstruct the serialized value, where N is the number of Redis objects composing the value and M their average size. For small string values the time complexity is thus O(1)+O(1*M) where M is small, so simply O(1). However for sorted set values the complexity is O(N*M*log(N)) because inserting values into sorted sets is O(log(N)).
@@ -204,7 +204,7 @@ module Protocol
 				# @param replace [Enum]
 				# @param absttl [Enum]
 				def restore(key, serialized_value, ttl=0)
-					return call('RESTORE', key, ttl, serialized_value)
+					call('RESTORE', key, ttl, serialized_value)
 				end
 				
 				# Incrementally iterate the keys space. O(1) for every call. O(N) for a complete iteration, including enough command calls for the cursor to return back to 0. N is the number of elements inside the collection.
@@ -225,7 +225,7 @@ module Protocol
 						arguments.append("TYPE", type)
 					end
 					
-					return call("SCAN", *arguments)
+					call("SCAN", *arguments)
 				end
 				
 				# Sort the elements in a list, set or sorted set. O(N+M*log(M)) where N is the number of elements in the list or set to sort, and M the number of returned elements. When the elements are not sorted, complexity is currently O(N) as there is a copy step that will be avoided in next releases.
@@ -260,35 +260,35 @@ module Protocol
 						arguments.append("STORE", store)
 					end
 					
-					return call('SORT', *arguments)
+					call('SORT', *arguments)
 				end
 				
 				# Alters the last access time of a key(s). Returns the number of existing keys specified. O(N) where N is the number of keys that will be touched.
 				# @see https://redis.io/commands/touch
 				# @param key [Key]
 				def touch(key, *keys)
-					return call('TOUCH', key, *keys)
+					call('TOUCH', key, *keys)
 				end
 				
 				# Get the time to live for a key. O(1).
 				# @see https://redis.io/commands/ttl
 				# @param key [Key]
 				def ttl(key)
-					return call('TTL', key)
+					call('TTL', key)
 				end
 				
 				# Determine the type stored at key. O(1).
 				# @see https://redis.io/commands/type
 				# @param key [Key]
 				def type(key)
-					return call('TYPE', key)
+					call('TYPE', key)
 				end
 				
 				# Delete a key asynchronously in another thread. Otherwise it is just as DEL, but non blocking. O(1) for each key removed regardless of its size. Then the command does O(N) work in a different thread in order to reclaim memory, where N is the number of allocations the deleted objects where composed of.
 				# @see https://redis.io/commands/unlink
 				# @param key [Key]
 				def unlink(key)
-					return call('UNLINK', key)
+					call('UNLINK', key)
 				end
 					
 				# Wait for the synchronous replication of all the write commands sent in the context of the current connection. O(1).
@@ -296,7 +296,7 @@ module Protocol
 				# @param numreplicas [Integer]
 				# @param timeout [Integer]
 				def wait(newreplicas, timeout = 0)
-					return call("WAIT", numreplicas, timeout)
+					call("WAIT", numreplicas, timeout)
 				end
 			end
 		end

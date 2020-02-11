@@ -46,7 +46,7 @@ module Protocol
 				# @see https://redis.io/commands/flushdb
 				# @param async [Enum]
 				def flushdb!
-					return call('FLUSHDB')
+					call('FLUSHDB')
 				end
 			end
 		end
