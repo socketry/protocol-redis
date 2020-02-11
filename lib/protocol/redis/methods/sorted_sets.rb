@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright, 2018, by Samuel G. D. Williams. <http://www.codeotaku.com>
+# Copyright, 2020, by Dimitry Chopey.
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,13 @@ module Protocol
 				# @param key [Key]
 				# @param score [Double]
 				# @param member [String]
-				# @param options [Hash]
-				#   - `:xx => true`: Only update elements that already exist (never add elements).
-        #   - `:nx => true`: Don't update already existing elements (always add new elements).
-				#   - `:change => true`: Modify the return value from the number of new elements added,
-				#     to the total number of elements changed; changed elements are new elements added
-				#     and elements already existing for which the score was updated.
-				#   - `:increment => true`: When this option is specified ZADD acts like ZINCRBY;
-				#     only one score-element pair can be specified in this mode.
+				# @param xx [Boolean] Only update elements that already exist (never add elements).
+        # @param nx [Boolean] Don't update already existing elements (always add new elements).
+				# @param change [Boolean] Modify the return value from the number of new elements added,
+				#   to the total number of elements changed; changed elements are new elements added
+				#   and elements already existing for which the score was updated.
+				# @param increment [Boolean] When this option is specified ZADD acts like ZINCRBY;
+				#   only one score-element pair can be specified in this mode.
 				def zadd(key, *args, nx: false, xx: false, change: false, increment: false)
 				  zadd_args = []
 					zadd_args << "NX" if nx
@@ -60,8 +59,7 @@ module Protocol
 				# @param key [Key]
 				# @param start [Integer]
 				# @param stop [Integer]
-				# @param options [Hash]
-				#   - `with_scores => true`: Return the scores of the elements together with the elements.
+				# @param with_scores [Boolean] Return the scores of the elements together with the elements.
 				def zrange(key, start, stop, with_scores: false)
 					zrange_args = [start, stop]
 					zrange_args << "WITHSCORES" if with_scores
