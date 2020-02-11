@@ -64,21 +64,25 @@ module Protocol
 				# @param latitude [Double]
 				# @param radius [Double]
 				# @param unit [Enum]
-				# @param withcoord [Enum]
-				# @param withdist [Enum]
-				# @param withhash [Enum]
-				def georadius(key, longitude, latitude, radius, unit = "m", withcoord: false, withdist: false, withhash: false, count: nil, store: nil, storedist: nil)
+				# @param count [Integer] Limit the number of results to at most this many.
+				# @param order [Symbol] `:ASC` Sort returned items from the nearest to the farthest, relative to the center. `:DESC` Sort returned items from the farthest to the nearest, relative to the center.
+				# @param with_coordinates [Boolean] Also return the longitude,latitude coordinates of the matching items.
+				# @param with_distance [Boolean] Also return the distance of the returned items from the specified center. The distance is returned in the same unit as the unit specified as the radius argument of the command.
+				# @param with_hash [Boolean] Also return the raw geohash-encoded sorted set score of the item, in the form of a 52 bit unsigned integer. This is only useful for low level hacks or debugging and is otherwise of little interest for the general user.
+				# @param store [Key]
+				# @param store_distance [Key]
+				def georadius(key, longitude, latitude, radius, unit = "m", with_coordinates: false, with_distance: false, with_hash: false, count: nil, order: nil, store: nil, store_distance: nil)
 					arguments = [key, longitude, latitude, radius, unit]
 					
-					if withcoord
+					if with_coordinates
 						arguments.append("WITHCOORD")
 					end
 					
-					if withdist
+					if with_distance
 						arguments.append("WITHDIST")
 					end
 					
-					if withhash
+					if with_hash
 						arguments.append("WITHHASH")
 					end
 					
@@ -86,15 +90,28 @@ module Protocol
 						arguments.append("COUNT", count)
 					end
 					
+					if order
+						arguments.append(order)
+					end
+					
+					readonly = true
+					
 					if store
 						arguments.append("STORE", store)
+						readonly = false
 					end
 					
-					if storedist
+					if store_distance
 						arguments.append("STOREDIST", storedist)
+						readonly = false
 					end
 					
-					call("GEORADIUS", *arguments)
+					# https://redis.io/commands/georadius#read-only-variants
+					if readonly
+						call("GEORADIUS_RO", *arguments)
+					else
+						call("GEORADIUS", *arguments)
+					end
 				end
 				
 				# Query a sorted set representing a geospatial index to fetch members matching a given maximum distance from a member. O(N+log(M)) where N is the number of elements inside the bounding box of the circular area delimited by center and radius and M is the number of items inside the index.
@@ -103,22 +120,25 @@ module Protocol
 				# @param member [String]
 				# @param radius [Double]
 				# @param unit [Enum]
-				# @param withcoord [Enum]
-				# @param withdist [Enum]
-				# @param withhash [Enum]
-				# @param order [Enum]
-				def georadiusbymember(key, member, radius, unit = "m", withcoord: false, withdist: false, withhash: false, count: nil, store: nil, storedist: nil)
+				# @param count [Integer] Limit the number of results to at most this many.
+				# @param order [Symbol] `:ASC` Sort returned items from the nearest to the farthest, relative to the center. `:DESC` Sort returned items from the farthest to the nearest, relative to the center.
+				# @param with_coordinates [Boolean] Also return the longitude,latitude coordinates of the matching items.
+				# @param with_distance [Boolean] Also return the distance of the returned items from the specified center. The distance is returned in the same unit as the unit specified as the radius argument of the command.
+				# @param with_hash [Boolean] Also return the raw geohash-encoded sorted set score of the item, in the form of a 52 bit unsigned integer. This is only useful for low level hacks or debugging and is otherwise of little interest for the general user.
+				# @param store [Key]
+				# @param store_distance [Key]
+				def georadiusbymember(key, member, radius, unit = "m", with_coordinates: false, with_distance: false, with_hash: false, count: nil, order: nil, store: nil, store_distance: nil)
 					arguments = [key, member, radius, unit]
 					
-					if withcoord
+					if with_coordinates
 						arguments.append("WITHCOORD")
 					end
 					
-					if withdist
+					if with_distance
 						arguments.append("WITHDIST")
 					end
 					
-					if withhash
+					if with_hash
 						arguments.append("WITHHASH")
 					end
 					
@@ -126,15 +146,36 @@ module Protocol
 						arguments.append("COUNT", count)
 					end
 					
+					if order
+						arguments.append(order)
+					end
+					
 					if store
 						arguments.append("STORE", store)
 					end
 					
-					if storedist
+					if store_distance
 						arguments.append("STOREDIST", storedist)
 					end
 					
-					call("GEORADIUS", *arguments)
+					readonly = true
+					
+					if store
+						arguments.append("STORE", store)
+						readonly = false
+					end
+					
+					if store_distance
+						arguments.append("STOREDIST", storedist)
+						readonly = false
+					end
+					
+					# https://redis.io/commands/georadius#read-only-variants
+					if readonly
+						call("GEORADIUSBYMEMBER_RO", *arguments)
+					else
+						call("GEORADIUSBYMEMBER", *arguments)
+					end
 				end
 			end
 		end

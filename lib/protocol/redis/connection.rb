@@ -139,11 +139,11 @@ module Protocol
 			# because each Redis command contains several lines. Flushing once per
 			# command is more efficient because it avoids unnecessary writes to the
 			# socket.
-			def write_lines(*args)
-				if args.empty?
+			def write_lines(*arguments)
+				if arguments.empty?
 					@stream.write(CRLF)
 				else
-					args.each do |arg|
+					arguments.each do |arg|
 						@stream.write(arg)
 						@stream.write(CRLF)
 					end

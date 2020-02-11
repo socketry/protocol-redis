@@ -145,24 +145,22 @@ module Protocol
 				# @param key [Key]
 				# @param value [String]
 				# @param expiration [Enum]
-				# @param condition [Enum]
-				def set(key, value, **options)
+				# @param update [Boolean, nil] If true, only update elements that already exist (never add elements). If false, don't update existing elements (only add new elements).
+				def set(key, value, update: nil, seconds: nil, milliseconds: nil)
 					arguments = []
 
-					if options.has_key? :seconds
-						arguments << 'EX'
-						arguments << options[:seconds]
+					if seconds
+						arguments << 'EX' << seconds
 					end
 
-					if options.has_key? :milliseconds
-						arguments << 'PX'
-						arguments << options[:milliseconds]
+					if milliseconds
+						arguments << 'PX' << milliseconds
 					end
 
-					if options[:condition] == :nx
-						arguments << 'NX'
-					elsif options[:condition] == :xx
-						arguments << 'XX'
+					if update == true
+						arguments << "XX"
+					elsif update == false
+						arguments << "NX"
 					end
 
 					return call('SET', key, value, *arguments)
