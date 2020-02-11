@@ -25,9 +25,9 @@ require_relative 'helper'
 require 'protocol/redis/methods/sorted_sets'
 
 RSpec.describe Protocol::Redis::Methods::SortedSets do
-	let(:object) { Object.including(Protocol::Redis::Methods::SortedSets).new }
-  let(:set_name) { 'test' }
-	
+	let(:object) {Object.including(Protocol::Redis::Methods::SortedSets).new}
+	let(:set_name) {'test'}
+
 	describe '#zadd' do
 		let(:timestamp) { Time.now.to_f }
 
@@ -40,14 +40,13 @@ RSpec.describe Protocol::Redis::Methods::SortedSets do
 		it "can generate correct arguments with options" do
 			expect(object).to receive(:call).with('ZADD', set_name, 'XX', 'CH', 'INCR', timestamp, 'payload')
 			
-			object.zadd(set_name, timestamp, 'payload', xx: true, change: true, increment: true)
+			object.zadd(set_name, timestamp, 'payload', update: true, change: true, increment: true)
 		end
 
 		it "can generate correct multiple arguments" do
-			expect(object).to receive(:call)
-			                    .with('ZADD', set_name, 'XX', 'CH', 'INCR', timestamp, 'payload-1', timestamp, 'payload-2')
+			expect(object).to receive(:call).with('ZADD', set_name, 'XX', 'CH', 'INCR', timestamp, 'payload-1', timestamp, 'payload-2')
 			
-			object.zadd(set_name, [[timestamp, 'payload-1'], [timestamp, 'payload-2']], xx: true, change: true, increment: true)
+			object.zadd(set_name, timestamp, 'payload-1', timestamp, 'payload-2', update: true, change: true, increment: true)
 		end
 	end
 
