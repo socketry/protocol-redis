@@ -41,16 +41,16 @@ module Protocol
 					arguments = ["ZADD", key]
 					
 					if update == true
-						arguments << "XX"
+						arguments.push("XX")
 					elsif update == false
-						arguments << "NX"
+						arguments.push("NX")
 					end
 					
-					arguments << "CH" if change
-					arguments << "INCR" if increment
+					arguments.push("CH") if change
+					arguments.push("INCR") if increment
 					
-					arguments << score << member
-					arguments.concat(others)
+					arguments.push(score, member)
+					arguments.push(*others)
 					
 					call(*arguments)
 				end
@@ -64,7 +64,7 @@ module Protocol
 				def zrange(key, start, stop, with_scores: false)
 					arguments = [start, stop]
 					
-					arguments << "WITHSCORES" if with_scores
+					arguments.push("WITHSCORES") if with_scores
 					
 					call("ZRANGE", key, *arguments)
 				end
@@ -81,8 +81,8 @@ module Protocol
         def zrangebyscore(key, min, max, with_scores: false, limit: nil)
           arguments = [min, max]
 
-          arguments << 'WITHSCORES' if with_scores
-          arguments.concat(limit.unshift('LIMIT')) if limit
+          arguments.push('WITHSCORES') if with_scores
+          arguments.push('LIMIT', *limit) if limit
 
           call('ZRANGEBYSCORE', key, *arguments)
         end
