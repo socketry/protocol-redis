@@ -64,6 +64,26 @@ RSpec.describe Protocol::Redis::Methods::SortedSets do
 		end
 	end
 
+	describe '#zrangebyscore' do
+		it "can generate correct arguments" do
+			expect(object).to receive(:call).with('ZRANGEBYSCORE', set_name, 0, 0)
+
+			object.zrangebyscore(set_name, 0, 0)
+		end
+
+		it "can generate correct arguments with WITHSCORES options" do
+			expect(object).to receive(:call).with('ZRANGEBYSCORE', set_name, 0, 0, 'WITHSCORES')
+
+			object.zrangebyscore(set_name, 0, 0, with_scores: true)
+		end
+
+		it "can generate correct arguments with WITHSCORES options" do
+			expect(object).to receive(:call).with('ZRANGEBYSCORE', set_name, 0, 0, 'WITHSCORES', 'LIMIT', 0, 10)
+
+			object.zrangebyscore(set_name, 0, 0, with_scores: true, limit: [0, 10])
+		end
+	end
+
 	describe '#zrem' do
 		let(:member_name) { 'test_member' }
 
