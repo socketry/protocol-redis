@@ -54,7 +54,7 @@ module Protocol
 					
 					call(*arguments)
 				end
-
+				
 				# Return a range of members in a sorted set, by index. O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements returned.
 				# @see https://redis.io/commands/zrange
 				# @param key [Key]
@@ -68,24 +68,24 @@ module Protocol
 					
 					call("ZRANGE", key, *arguments)
 				end
-
+				
 				# Return a range of members in a sorted set, by score. O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements being returned. If M is constant (e.g. always asking for the first 10 elements with LIMIT), you can consider it O(log(N))..
-        # @see https://redis.io/commands/zrangebyscore
-        # @param key [Key]
-        # @param min [Integer]
-        # @param max [Integer]
-        # @param with_scores [Boolean] Return the scores of the elements together with the elements.
-        # @param limit [Array] Can be used to only get a range of the matching elements (similar to SELECT LIMIT offset, count in SQL).
-        # @example Retrieve the first 10 members with score `>= 0` and `<= 100`
-        #   redis.zrangebyscore("zset", "0", "100", :limit => [0, 10])
-        def zrangebyscore(key, min, max, with_scores: false, limit: nil)
-          arguments = [min, max]
-
-          arguments.push('WITHSCORES') if with_scores
-          arguments.push('LIMIT', *limit) if limit
-
-          call('ZRANGEBYSCORE', key, *arguments)
-        end
+				# @see https://redis.io/commands/zrangebyscore
+				# @param key [Key]
+				# @param min [Integer]
+				# @param max [Integer]
+				# @param with_scores [Boolean] Return the scores of the elements together with the elements.
+				# @param limit [Array] Can be used to only get a range of the matching elements (similar to SELECT LIMIT offset, count in SQL).
+				# @example Retrieve the first 10 members with score `>= 0` and `<= 100`
+				#   redis.zrangebyscore("zset", "0", "100", :limit => [0, 10])
+				def zrangebyscore(key, min, max, with_scores: false, limit: nil)
+					arguments = [min, max]
+					
+					arguments.push('WITHSCORES') if with_scores
+					arguments.push('LIMIT', *limit) if limit
+					
+					call('ZRANGEBYSCORE', key, *arguments)
+				end
 				
 				# Remove one or more members from a sorted set. O(M*log(N)) with N being the number of elements in the sorted set and M the number of elements to be removed.
 				# @see https://redis.io/commands/zrem
