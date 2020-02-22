@@ -1,6 +1,8 @@
-# Protocol::Redis ![Development](https://github.com/socketry/protocol-redis/workflows/Development/badge.svg?branch=master)
+# Protocol::Redis
 
 Implements the RESP2 and [RESP3](https://github.com/antirez/RESP3) Redis protocols.
+
+[![Actions Status](https://github.com/socketry/protocol-redis/workflows/Development/badge.svg)](https://github.com/socketry/protocol-redis/actions?workflow=Development)
 
 ## Installation
 
