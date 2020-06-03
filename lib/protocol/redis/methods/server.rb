@@ -31,7 +31,7 @@ module Protocol
 				def info
 					metadata = {}
 					
-					call('INFO').each_line(Protocol::CRLF) do |line|
+					call('INFO').each_line(Redis::Connection::CRLF) do |line|
 						key, value = line.split(':')
 						
 						if value
