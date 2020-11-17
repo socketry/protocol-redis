@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# Copyright, 2019, by Mikael Henriksson. <http://www.mhenrixon.com>
+# Copyright, 2018, by Samuel G. D. Williams. <http://www.codeotaku.com>
+# Copyright, 2018, by Huba Nagy.
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,37 +21,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require_relative 'methods/generic'
-require_relative 'methods/connection'
-require_relative 'methods/server'
-require_relative 'methods/geospatial'
-
-require_relative 'methods/counting'
-
-require_relative 'methods/hashes'
-require_relative 'methods/lists'
-require_relative 'methods/strings'
-require_relative 'methods/sorted_sets'
-
-require_relative 'methods/pubsub'
-
 module Protocol
 	module Redis
 		module Methods
-			def self.included(klass)
-				klass.include Methods::Generic
-				klass.include Methods::Connection
-				klass.include Methods::Server
-				klass.include Methods::Geospatial
-				
-				klass.include Methods::Counting
-				
-				klass.include Methods::Hashes
-				klass.include Methods::Lists
-				klass.include Methods::SortedSets
-				klass.include Methods::Strings
-				
-				klass.include Methods::Pubsub
+			module Pubsub
+				# Post a message to a channel.
+				# @see https://redis.io/commands/publish
+				# @param channel [String]
+				# @param message [String]
+				def publish(channel, message)
+					call('PUBLISH', channel, message)
+				end
 			end
 		end
 	end
