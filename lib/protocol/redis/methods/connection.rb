@@ -26,9 +26,10 @@ module Protocol
 			module Connection
 				# Authenticate to the server.
 				# @see https://redis.io/commands/auth
-				# @param password [String]
-				def auth(password)
-					call("AUTH", password)
+				# @param username [String] Optional username, if Redis ACLs are used.
+				# @param password [String] Required password.
+				def auth(*arguments)
+					call("AUTH", *arguments)
 				end
 				
 				# Echo the given string.
