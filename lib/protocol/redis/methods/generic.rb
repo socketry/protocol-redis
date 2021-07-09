@@ -46,8 +46,16 @@ module Protocol
 				# Determine if a key exists. O(1).
 				# @see https://redis.io/commands/exists
 				# @param key [Key]
+				# @return [Integer]
 				def exists(key, *keys)
 					call('EXISTS', key, *keys)
+				end
+				
+				# Boolean oversion of `exists`
+				# @param key [Key]
+				# @return [Boolean]
+				def exists?(key, *keys)
+					exists(key, *keys) > 0
 				end
 				
 				# Set a key's time to live in seconds. O(1).
