@@ -35,7 +35,7 @@ module Protocol
 				# Set the string value of a hash field. O(1) for each field/value pair added, so O(N) to add N field/value pairs when the command is called with multiple field/value pairs.
 				# @see https://redis.io/commands/hset
 				# @param key [Key]
-				# @return [Integer]
+				# @return [Integer] if new field added returns "1" otherwise "0"
 				def hset(key, field, value)
 					call('HSET', key, field, value)
 				end
@@ -45,7 +45,7 @@ module Protocol
 				# @param key [Key]
 				# @param field [String]
 				# @param value [String]
-				# @return [Boolean]
+				# @return [Boolean] "true" if new field added, "false" otherwise
 				def hsetnx(key, field, value)
 					call('HSETNX', key, field, value) > 0
 				end
@@ -80,7 +80,7 @@ module Protocol
 				# @see https://redis.io/commands/hdel
 				# @param key [Key]
 				# @param field [String]
-				# @return [Integer]
+				# @return [Integer] number of deleted fields
 				def hdel(key, *fields)
 					call('HDEL', key, *fields)
 				end
@@ -99,7 +99,7 @@ module Protocol
 				# @param key [Key]
 				# @param field [String]
 				# @param increment [Integer]
-				# @return [Integer]
+				# @return [Integer] field value after increment
 				def hincrby(key, field, increment)
 					call('HINCRBY', key, field, increment)
 				end
@@ -109,7 +109,7 @@ module Protocol
 				# @param key [Key]
 				# @param field [String]
 				# @param increment [Double]
-				# @return [Float]
+				# @return [Float] field value after increment
 				def hincrbyfloat(key, field, increment)
 					Float(call('HINCRBYFLOAT', key, field, increment))
 				end
