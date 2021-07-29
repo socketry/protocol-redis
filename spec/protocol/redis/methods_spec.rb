@@ -23,4 +23,18 @@
 require 'protocol/redis/methods'
 
 RSpec.describe Protocol::Redis::Methods do
+  context "when included" do
+    let(:constants) do
+      described_class.constants(false).map do |c|
+        described_class.const_get(c)
+      end
+    end
+
+    it "includes all other methods modules" do
+      klass = Class.new
+      expect do
+        klass.include(described_class)
+      end.to change { klass.ancestors }.to include(*constants)
+    end
+  end
 end

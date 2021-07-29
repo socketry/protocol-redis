@@ -29,7 +29,9 @@ require_relative 'methods/counting'
 
 require_relative 'methods/hashes'
 require_relative 'methods/lists'
+require_relative 'methods/sets'
 require_relative 'methods/strings'
+require_relative 'methods/streams'
 require_relative 'methods/sorted_sets'
 
 require_relative 'methods/pubsub'
@@ -47,8 +49,10 @@ module Protocol
 				
 				klass.include Methods::Hashes
 				klass.include Methods::Lists
+				klass.include Methods::Sets
 				klass.include Methods::SortedSets
 				klass.include Methods::Strings
+				klass.include Methods::Streams
 				
 				klass.include Methods::Pubsub
 			end
