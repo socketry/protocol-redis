@@ -1,10 +1,14 @@
-require_relative 'helper'
+# frozen_string_literal: true
 
+# Released under the MIT License.
+# Copyright, 2021-2023, by Samuel Williams.
+
+require 'methods_context'
 require 'protocol/redis/methods/connection'
 
-RSpec.describe Protocol::Redis::Methods::Connection do
-	let(:object) {Object.including(Protocol::Redis::Methods::Connection).new}
-
+describe Protocol::Redis::Methods::Connection do
+	include_context MethodsContext, Protocol::Redis::Methods::Connection
+	
 	describe '#auth' do
 		it 'generates correct arguments for password' do
 			expect(object).to receive(:call).with('AUTH', 'hunter2').and_return("OK")
