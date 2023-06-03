@@ -28,7 +28,7 @@ module Protocol
 				# @see https://redis.io/commands/eval
 				# @param script [String]
 				# @param numkeys [Integer]
-				# @param key [Key]
+				# @param key [Key] Multiple keys are supported, as long as the same number of values are also provided
 				# @param arg [String]
 				def eval(*arguments)
 					call("EVAL", *arguments)
@@ -44,37 +44,12 @@ module Protocol
 					call("EVALSHA", *arguments)
 				end
 				
-				# Set the debug mode for executed scripts. O(1).
-				# @see https://redis.io/commands/script debug
-				# @param mode [Enum]
-				def script_debug(*arguments)
-					call("SCRIPT DEBUG", *arguments)
-				end
-				
-				# Check existence of scripts in the script cache. O(N) with N being the number of scripts to check (so checking a single script is an O(1) operation).
-				# @see https://redis.io/commands/script exists
-				# @param sha1 [String]
-				def script_exists(*arguments)
-					call("SCRIPT EXISTS", *arguments)
-				end
-				
-				# Remove all the scripts from the script cache. O(N) with N being the number of scripts in cache.
-				# @see https://redis.io/commands/script flush
-				def script_flush(*arguments)
-					call("SCRIPT FLUSH", *arguments)
-				end
-				
-				# Kill the script currently in execution. O(1).
-				# @see https://redis.io/commands/script kill
-				def script_kill(*arguments)
-					call("SCRIPT KILL", *arguments)
-				end
-				
-				# Load the specified Lua script into the script cache. O(N) with N being the length in bytes of the script body.
-				# @see https://redis.io/commands/script load
-				# @param script [String]
-				def script_load(*arguments)
-					call("SCRIPT LOAD", *arguments)
+				# Execute script management commands
+				# @see https://redis.io/commands/script/
+				# @param subcommand [String] e.g. `debug`, `exists`, `flush`, `load`, `kill`
+				# @param [Array<String>] args depends on the subcommand provided
+				def script(subcommand, *arguments)
+					call("SCRIPT", subcommand.to_s, *arguments)
 				end
 			end
 		end
