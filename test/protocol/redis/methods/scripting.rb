@@ -1,9 +1,14 @@
-require_relative 'helper'
+# frozen_string_literal: true
 
+# Released under the MIT License.
+# Copyright, 2023, by Nick Burwell.
+# Copyright, 2023, by Samuel Williams.
+
+require 'methods_context'
 require 'protocol/redis/methods/scripting'
 
-RSpec.describe Protocol::Redis::Methods::Scripting do
-	let(:object) {Object.including(Protocol::Redis::Methods::Scripting).new}
+describe Protocol::Redis::Methods::Scripting do
+  include_context MethodsContext, Protocol::Redis::Methods::Scripting
 
 	describe '#eval' do
 		let(:script) {"scriptname"}
