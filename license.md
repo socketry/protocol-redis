@@ -6,7 +6,7 @@ Copyright, 2020, by Salim Semaoune.
 Copyright, 2020, by Dimitry Chopey.  
 Copyright, 2020, by Nakul Warrier.  
 Copyright, 2020, by David Ortiz.  
-Copyright, 2021, by Troex Nevelin.  
+Copyright, 2021-2023, by Troex Nevelin.  
 Copyright, 2021, by Daniel Evans.  
 Copyright, 2023, by Nick Burwell.  
 

@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
 	spec.version = Protocol::Redis::VERSION
 	
 	spec.summary = "A transport agnostic RESP protocol client/server."
-	spec.authors = ["Samuel Williams", "Dimitry Chopey", "David Ortiz", "Nakul Warrier", "Daniel Evans", "Nick Burwell", "Olle Jonsson", "Salim Semaoune", "Troex Nevelin"]
+	spec.authors = ["Samuel Williams", "Dimitry Chopey", "David Ortiz", "Nakul Warrier", "Troex Nevelin", "Daniel Evans", "Nick Burwell", "Olle Jonsson", "Salim Semaoune"]
 	spec.license = "MIT"
 	
 	spec.cert_chain  = ['release.cert']
