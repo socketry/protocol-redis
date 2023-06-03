@@ -8,6 +8,10 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in protocol-redis.gemspec
 gemspec
 
+group :maintenance, optional: true do
+	gem "bake-gem"
+end
+
 group :test do
 	gem "bake-test"
 	gem "bake-test-external"
