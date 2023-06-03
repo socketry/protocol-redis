@@ -5,14 +5,19 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in protocol-redis.gemspec
 gemspec
 
 group :maintenance, optional: true do
+	gem "bake-modernize"
 	gem "bake-gem"
+	
+	gem "utopia-project", "~> 0.18"
 end
 
 group :test do
 	gem "bake-test"
 	gem "bake-test-external"
+	
+	gem "covered"
+	gem "sus"
 end
