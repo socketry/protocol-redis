@@ -33,6 +33,14 @@ puts server.read_object
 # => "Hello World!"
 ```
 
+## Development
+
+Run tests:
+
+```
+bundle exec bake test
+```
+
 ## Contributing
 
 We welcome contributions to this project.
