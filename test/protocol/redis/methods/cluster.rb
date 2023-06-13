@@ -25,7 +25,7 @@ describe Protocol::Redis::Methods::Cluster do
   end
 
   describe '#asking' do
-    it "can generate correct call with no parameters" do
+    it "can generate correct call with no arguments" do
       expect(object).to receive(:call).with("ASKING")
 
       object.asking
