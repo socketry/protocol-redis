@@ -9,6 +9,7 @@
 require_relative 'methods/generic'
 require_relative 'methods/connection'
 require_relative 'methods/server'
+require_relative 'methods/cluster'
 require_relative 'methods/geospatial'
 
 require_relative 'methods/counting'
@@ -30,6 +31,7 @@ module Protocol
 				klass.include Methods::Generic
 				klass.include Methods::Connection
 				klass.include Methods::Server
+				klass.include Methods::Cluster
 				klass.include Methods::Geospatial
 				
 				klass.include Methods::Counting
