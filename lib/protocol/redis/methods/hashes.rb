@@ -41,6 +41,21 @@ module Protocol
 				def hmset(key, *attrs)
 					call('HMSET', key, *attrs)
 				end
+
+				# Set multiple hash fields to multiple values, by providing a hash
+				#
+				# @example
+				#   redis.mapped_hmset("hash", { "f1" => "v1", "f2" => "v2" })
+				#     # => "OK"
+				#
+				# @param key [Key]
+				# @param hash [Hash] a non-empty hash with fields mapping to values
+				# @return [String] default: "OK"
+				#
+				# @see #hmset
+				def mapped_hmset(key, hash)
+					hmset(key, *hash.flatten)
+				end
 				
 				# Get the value of a hash field. O(1).
 				# @see https://redis.io/commands/hget
@@ -54,12 +69,28 @@ module Protocol
 				# Get the values of all the given hash fields. O(N) where N is the number of fields being requested.
 				# @see https://redis.io/commands/hmget
 				# @param key [Key]
-				# @param field [String]
+				# @param fields [Array<String>] array of fields
 				# @return [Array]
 				def hmget(key, *fields)
 					call('HMGET', key, *fields)
 				end
-				
+
+				# Get the values of all the given hash fields and return as array
+				#
+				# @example
+				#   redis.mapped_hmget("hash", "f1", "f2")
+				#     # => { "f1" => "v1", "f2" => "v2" }
+				#
+				# @param key [Key]
+				# @param fields [Array<String>] array of fields
+				# @return [Hash] a hash mapping the specified fields to their values
+				#
+				# @see #hmget
+				def mapped_hmget(key, *fields)
+					reply = hmget(key, *fields)
+					Hash[fields.zip(reply)]
+				end
+
 				# Delete one or more hash fields. O(N) where N is the number of fields to be removed.
 				# @see https://redis.io/commands/hdel
 				# @param key [Key]
@@ -120,6 +151,24 @@ module Protocol
 				# @return [Hash]
 				def hgetall(key)
 					call('HGETALL', key).each_slice(2).to_h
+				end
+
+				# Iterates fields of Hash types and their associated values. O(1) for every call. O(N) for a complete iteration, including enough command calls for the cursor to return back to 0. N is the number of elements inside the collection.
+				# @see https://redis.io/commands/hscan/
+				# @param cursor [Cursor]
+				# @return [Hash]
+				def hscan(cursor, match: nil, count: nil)
+					arguments = [cursor]
+
+					if match
+						arguments.append("MATCH", match)
+					end
+
+					if count
+						arguments.append("COUNT", count)
+					end
+
+					call("HSCAN", *arguments)
 				end
 			end
 		end
