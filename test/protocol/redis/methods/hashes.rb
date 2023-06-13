@@ -2,6 +2,7 @@
 
 # Released under the MIT License.
 # Copyright, 2023, by Samuel Williams.
+# Copyright, 2023, by Nick Burwell.
 
 require 'methods_context'
 require 'protocol/redis/methods/hashes'

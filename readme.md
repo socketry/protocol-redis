@@ -37,9 +37,7 @@ puts server.read_object
 
 Run tests:
 
-```
-bundle exec bake test
-```
+    bundle exec bake test
 
 ## Contributing
 

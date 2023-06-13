@@ -3,6 +3,7 @@
 # Released under the MIT License.
 # Copyright, 2019-2023, by Samuel Williams.
 # Copyright, 2023, by Troex Nevelin.
+# Copyright, 2023, by Nick Burwell.
 
 module Protocol
 	module Redis
