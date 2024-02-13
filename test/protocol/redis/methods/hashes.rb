@@ -92,4 +92,12 @@ describe Protocol::Redis::Methods::Hashes do
 			expect(object.hgetall(hash_name)).to be == {field_name => value, 'test' => '1'}
 		end
 	end
+	
+	with '#hscan' do
+		it 'can generate correct arguments' do
+			expect(object).to receive(:call).with('HSCAN', hash_name, 0).and_return([0, []])
+
+			expect(object.hscan(hash_name, 0)).to be == [0, []]
+		end
+	end
 end

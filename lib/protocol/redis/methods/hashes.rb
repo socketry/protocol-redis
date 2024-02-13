@@ -158,8 +158,8 @@ module Protocol
 				# @see https://redis.io/commands/hscan/
 				# @param cursor [Cursor]
 				# @return [Hash]
-				def hscan(cursor, match: nil, count: nil)
-					arguments = [cursor]
+				def hscan(key, cursor = "0", match: nil, count: nil)
+					arguments = [key, cursor]
 
 					if match
 						arguments.append("MATCH", match)
@@ -170,6 +170,19 @@ module Protocol
 					end
 
 					call("HSCAN", *arguments)
+				end
+				
+				# Iterate over each field and the value of the hash, using HSCAN.
+				def hscan_each(key, cursor = "0", match: nil, count: nil, &block)
+					return enum_for(:hscan_each, key, cursor, match: match, count: count) unless block_given?
+
+					while true
+						cursor, data = hscan(key, cursor, match: match, count: count)
+
+						data.each_slice(2, &block)
+
+						break if cursor == "0"
+					end
 				end
 			end
 		end
