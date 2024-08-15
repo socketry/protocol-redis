@@ -25,6 +25,22 @@ module Protocol
 					return metadata
 				end
 				
+				def client_info
+					metadata = {}
+					
+					call('CLIENT', 'INFO').split(/\s+/).each do |pair|
+						key, value = pair.split('=')
+						
+						if value
+							metadata[key.to_sym] = value
+						else
+							metadata[key.to_sym] = nil
+						end
+					end
+					
+					return metadata
+				end
+				
 				# Remove all keys from the current database.
 				# @see https://redis.io/commands/flushdb
 				# @param async [Enum]
