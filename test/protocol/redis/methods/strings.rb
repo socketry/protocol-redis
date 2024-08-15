@@ -20,7 +20,7 @@ describe Protocol::Redis::Methods::Strings do
 			object.append(key, value)
 		end
 	end
-
+	
 	describe '#bitcount' do
 		let(:key) {"mykey"}
 		
@@ -33,14 +33,14 @@ describe Protocol::Redis::Methods::Strings do
 	
 	describe '#decr' do
 		let(:key) {"mykey"}
-
+		
 		it "can generate correct arguments" do
 			expect(object).to receive(:call).with("DECR", key)
 			
 			object.decr(key)
 		end
 	end
-
+	
 	describe '#decrby' do
 		let(:key) {"mykey"}
 		let(:decrement) {4}
@@ -51,7 +51,7 @@ describe Protocol::Redis::Methods::Strings do
 			object.decrby(key, decrement)
 		end
 	end
-
+	
 	describe '#get' do
 		let(:key) {"mykey"}
 		

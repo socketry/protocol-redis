@@ -16,10 +16,12 @@ Gem::Specification.new do |spec|
 	spec.homepage = "https://github.com/socketry/protocol-redis"
 	
 	spec.metadata = {
+		"documentation_uri" => "https://socketry.github.io/protocol-redis/",
 		"funding_uri" => "https://github.com/sponsors/ioquatix",
+		"source_code_uri" => "https://github.com/socketry/protocol-redis.git",
 	}
 	
 	spec.files = Dir.glob(['{lib}/**/*', '*.md'], File::FNM_DOTMATCH, base: __dir__)
 	
-	spec.required_ruby_version = ">= 2.7"
+	spec.required_ruby_version = ">= 3.1"
 end
