@@ -5,9 +5,11 @@
 
 module Protocol
 	module Redis
+		# Represents a general Redis protocol error.
 		class Error < StandardError
 		end
 		
+		# Represents an error response from the Redis server.
 		class ServerError < Error
 		end
 	end

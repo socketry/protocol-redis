@@ -26,7 +26,9 @@ require_relative "methods/pubsub"
 
 module Protocol
 	module Redis
+		# A collection of methods for interacting with Redis.
 		module Methods
+			# Includes all Redis methods into the given class.
 			def self.included(klass)
 				klass.include Methods::Generic
 				klass.include Methods::Connection

@@ -26,6 +26,9 @@ module Protocol
 					return metadata
 				end
 				
+				# Get the client information for the current connection.
+				# See <https://redis.io/commands/client-info> for more details.
+				# @returns [Hash] A hash containing client metadata.
 				def client_info
 					metadata = {}
 					

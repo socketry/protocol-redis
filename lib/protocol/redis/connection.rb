@@ -7,9 +7,12 @@ require_relative "error"
 
 module Protocol
 	module Redis
+		# Represents a Redis protocol connection handling low-level communication.
 		class Connection
 			CRLF = "\r\n".freeze
 			
+			# Initialize a new connection with the provided stream.
+			# @parameter stream [IO] The underlying stream for communication.
 			def initialize(stream)
 				@stream = stream
 				
@@ -22,18 +25,23 @@ module Protocol
 			# @attr [Integer] Number of requests sent.
 			attr :count
 			
+			# Close the underlying stream connection.
 			def close
 				@stream.close
 			end
 			
 			class << self
+				# Create a new client connection instance.
 				alias client new
 			end
 			
+			# Flush any buffered data to the stream.
 			def flush
 				@stream.flush
 			end
 			
+			# Check if the connection is closed.
+			# @returns [Boolean] True if the connection is closed.
 			def closed?
 				@stream.closed?
 			end
@@ -51,6 +59,8 @@ module Protocol
 				end
 			end
 			
+			# Write a Redis object to the stream.
+			# @parameter object [Object] The object to write (String, Array, Integer, or object with to_redis method).
 			def write_object(object)
 				case object
 				when String
@@ -64,6 +74,9 @@ module Protocol
 				end
 			end
 			
+			# Read data of specified length from the stream.
+			# @parameter length [Integer] The number of bytes to read.
+			# @returns [String] The data read from the stream.
 			def read_data(length)
 				buffer = @stream.read(length) or @stream.eof!
 				
@@ -73,6 +86,10 @@ module Protocol
 				return buffer
 			end
 			
+			# Read and parse a Redis object from the stream.
+			# @returns [Object] The parsed Redis object (String, Array, Integer, or nil).
+			# @raises [ServerError] If the server returns an error response.
+			# @raises [EOFError] If the stream reaches end of file.
 			def read_object
 				line = read_line or raise EOFError
 				
