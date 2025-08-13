@@ -14,9 +14,10 @@ Please see the [project documentation](https://socketry.github.io/protocol-redis
 
 Please see the [project releases](https://socketry.github.io/protocol-redis/releases/index) for all releases.
 
-### Unreleased
+### v0.10.0
 
   - Add agent context.
+  - 100% documentation and test coverage + minor bug fixes.
 
 ### v0.9.0
 

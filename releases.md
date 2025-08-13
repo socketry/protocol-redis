@@ -1,6 +1,6 @@
 # Releases
 
-## Unreleased
+## v0.10.0
 
   - Add agent context.
   - 100% documentation and test coverage + minor bug fixes.
@@ -62,7 +62,7 @@
   - Add sorted set methods (ZADD, ZREM, ZRANGE, etc.).
   - Use keyword arguments for better API design.
   - Normalize implementations and keyword arguments.
-  - Add call(*arguments) benchmark.
+  - Add call(\*arguments) benchmark.
   - Prefer frozen string literals.
 
 ## v0.3.1
