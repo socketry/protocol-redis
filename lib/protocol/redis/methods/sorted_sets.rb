@@ -22,7 +22,7 @@ module Protocol
 				# @parameter key [Key]
 				# @parameter timeout [Integer]
 				def bzpopmax(*keys, timeout: 0)
-					call("BZPOPMAX", *keys, timeout: 0)
+					call("BZPOPMAX", *keys, timeout)
 				end
 				
 				# Add one or more members to a sorted set, or update its score if it already exists. O(log(N)) for each item added, where N is the number of elements in the sorted set.
@@ -77,7 +77,7 @@ module Protocol
 				# @parameter increment [Integer]
 				# @parameter member [String]
 				def zincrby(key, increment, member)
-					call("ZINCRBY", key, amount, member)
+					call("ZINCRBY", key, increment, member)
 				end
 				
 				# Intersect multiple sorted sets and store the resulting sorted set in a new key. O(N*K)+O(M*log(M)) worst case with N being the smallest input sorted set, K being the number of input sorted sets and M being the number of elements in the resulting sorted set.
@@ -127,7 +127,7 @@ module Protocol
 				# @parameter key [Key]
 				# @parameter count [Integer]
 				def zpopmin(key, count = 1)
-					call("ZPOPMIN", key, count = 1)
+					call("ZPOPMIN", key, count)
 				end
 				
 				# Return a range of members in a sorted set, by index. O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements returned.

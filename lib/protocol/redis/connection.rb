@@ -69,8 +69,20 @@ module Protocol
 					write_array(object)
 				when Integer
 					write_lines(":#{object}")
+				when nil
+					write_lines("$-1")
 				else
 					write_object(object.to_redis)
+				end
+			end
+			
+			# Write a Redis array to the stream.
+			# @parameter array [Array] The array to write.
+			def write_array(array)
+				write_lines("*#{array.size}")
+				
+				array.each do |element|
+					write_object(element)
 				end
 			end
 			

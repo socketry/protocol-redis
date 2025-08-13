@@ -141,7 +141,7 @@ module Protocol
 				# @parameter key [Key]
 				# @parameter milliseconds [Integer]
 				def pexpire(key, milliseconds)
-					call("PEXPIRE", milliseconds)
+					call("PEXPIRE", key, milliseconds)
 				end
 				
 				# Set the expiration for a key as a UNIX timestamp specified in milliseconds. O(1).
@@ -149,9 +149,9 @@ module Protocol
 				# @parameter key [Key]
 				# @parameter milliseconds-timestamp [Posix time]
 				def pexpireat(key, time)
-					case time.class
+					case time
 					when DateTime, Time, Date 
-						timestamp =  time.strftime("%Q").to_i
+						timestamp = (time.to_f * 1000).to_i
 					else
 						timestamp = time
 					end
@@ -252,7 +252,7 @@ module Protocol
 						arguments.append("STORE", store)
 					end
 					
-					call("SORT", *arguments)
+					call("SORT", key, *arguments)
 				end
 				
 				# Alters the last access time of a key(s). Returns the number of existing keys specified. O(N) where N is the number of keys that will be touched.
@@ -287,7 +287,7 @@ module Protocol
 				# See <https://redis.io/commands/wait> for more details.
 				# @parameter numreplicas [Integer]
 				# @parameter timeout [Integer]
-				def wait(newreplicas, timeout = 0)
+				def wait(numreplicas, timeout = 0)
 					call("WAIT", numreplicas, timeout)
 				end
 			end

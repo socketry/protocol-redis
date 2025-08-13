@@ -54,4 +54,12 @@ describe Protocol::Redis::Methods::Server do
 			)
 		end
 	end
+	
+	with "#flushdb!" do
+		it "can generate correct arguments" do
+			expect(object).to receive(:call).with("FLUSHDB").and_return("OK")
+			
+			expect(object.flushdb!).to be == "OK"
+		end
+	end
 end

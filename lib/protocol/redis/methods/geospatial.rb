@@ -12,7 +12,7 @@ module Protocol
 				# See <https://redis.io/commands/geoadd> for more details.
 				# @parameter key [Key]
 				def geoadd(key, longitude, latitude, member, *arguments)
-					call("GEOADD", longitude, latitude, member, *arguments)
+					call("GEOADD", key, longitude, latitude, member, *arguments)
 				end
 				
 				# Returns members of a geospatial index as standard geohash strings. O(log(N)) for each member requested, where N is the number of elements in the sorted set.
@@ -86,7 +86,7 @@ module Protocol
 					end
 					
 					if store_distance
-						arguments.append("STOREDIST", storedist)
+						arguments.append("STOREDIST", store_distance)
 						readonly = false
 					end
 					
@@ -134,14 +134,6 @@ module Protocol
 						arguments.append(order)
 					end
 					
-					if store
-						arguments.append("STORE", store)
-					end
-					
-					if store_distance
-						arguments.append("STOREDIST", storedist)
-					end
-					
 					readonly = true
 					
 					if store
@@ -150,7 +142,7 @@ module Protocol
 					end
 					
 					if store_distance
-						arguments.append("STOREDIST", storedist)
+						arguments.append("STOREDIST", store_distance)
 						readonly = false
 					end
 					
