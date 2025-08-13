@@ -9,29 +9,29 @@ module Protocol
 		module Methods
 			module Scripting
 				# Execute a Lua script server side. Depends on the script that is executed.
-				# @see https://redis.io/commands/eval
-				# @param script [String]
-				# @param numkeys [Integer]
-				# @param key [Key] Multiple keys are supported, as long as the same number of values are also provided
-				# @param arg [String]
+				# See <https://redis.io/commands/eval> for more details.
+				# @parameter script [String]
+				# @parameter numkeys [Integer]
+				# @parameter key [Key] Multiple keys are supported, as long as the same number of values are also provided
+				# @parameter arg [String]
 				def eval(*arguments)
 					call("EVAL", *arguments)
 				end
 				
 				# Execute a Lua script server side. Depends on the script that is executed.
-				# @see https://redis.io/commands/evalsha
-				# @param sha1 [String]
-				# @param numkeys [Integer]
-				# @param key [Key]
-				# @param arg [String]
+				# See <https://redis.io/commands/evalsha> for more details.
+				# @parameter sha1 [String]
+				# @parameter numkeys [Integer]
+				# @parameter key [Key]
+				# @parameter arg [String]
 				def evalsha(*arguments)
 					call("EVALSHA", *arguments)
 				end
 				
 				# Execute script management commands
-				# @see https://redis.io/commands/script/
-				# @param subcommand [String] e.g. `debug`, `exists`, `flush`, `load`, `kill`
-				# @param [Array<String>] args depends on the subcommand provided
+				# See <https://redis.io/commands/script/> for more details.
+				# @parameter subcommand [String] e.g. `debug`, `exists`, `flush`, `load`, `kill`
+				# @parameter [Array<String>] args depends on the subcommand provided
 				def script(subcommand, *arguments)
 					call("SCRIPT", subcommand.to_s, *arguments)
 				end

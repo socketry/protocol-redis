@@ -3,39 +3,39 @@
 # Released under the MIT License.
 # Copyright, 2019-2023, by Samuel Williams.
 
-require 'async'
+require "async"
 
 def commands
-	require 'async/http/internet'
-	require 'json'
+	require "async/http/internet"
+	require "json"
 	
 	@commands = fetch_commands
 	
 	@commands.each do |command, command_spec|
-		method_name = command.to_s.downcase.split(/[\s\-_]+/).join('_')
+		method_name = command.to_s.downcase.split(/[\s\-_]+/).join("_")
 		command_spec[:method_name] = method_name
 	end
 	
 	# There is a bit of a discrepancy between how the groups appear in the JSON and how they appear in the compiled documentation, this is a mapping from `commands.json` to documentation:
 	@groups = {
-		'generic' => 'generic',
-		'string' => 'strings',
-		'list' => 'lists',
-		'set' => 'sets',
-		'sorted_set' => 'sorted_sets',
-		'hash' => 'hashes',
-		'connection' => 'connection',
-		'server' => 'server',
-		'scripting' => 'scripting',
-		'hyperloglog' => 'counting',
-		'cluster' => 'cluster',
-		'geo' => 'geospatial',
-		'stream' => 'streams'
+		"generic" => "generic",
+		"string" => "strings",
+		"list" => "lists",
+		"set" => "sets",
+		"sorted_set" => "sorted_sets",
+		"hash" => "hashes",
+		"connection" => "connection",
+		"server" => "server",
+		"scripting" => "scripting",
+		"hyperloglog" => "counting",
+		"cluster" => "cluster",
+		"geo" => "geospatial",
+		"stream" => "streams"
 	}.freeze
 end
 
 def methods
-	require 'trenni/template'
+	require "trenni/template"
 	
 	self.commands unless defined?(@commands)
 	
@@ -110,13 +110,13 @@ def documentation
 				].compact
 				
 				comments = [
-					summary.join(' '),
-					"@see https://redis.io/commands/#{command.to_s.downcase}"
+					summary.join(" "),
+					"See <https://redis.io/commands/#{command.to_s.downcase}> for more details."
 				]
 				
 				command_spec[:arguments]&.each do |argument|
 					next if argument[:command] or argument[:type].nil? or argument[:type].is_a?(Array)
-					comments << "@param #{argument[:name]} [#{argument[:type].capitalize}]"
+					comments << "@parameter #{argument[:name]} [#{argument[:type].capitalize}]"
 				end
 				
 				lines.insert(start, comments.map{|comment| "#{indentation}\# #{comment}\n"})
@@ -156,5 +156,5 @@ def normalize(sentence)
 end
 
 def module_name(group)
-	group.split('_').collect(&:capitalize).join
+	group.split("_").collect(&:capitalize).join
 end

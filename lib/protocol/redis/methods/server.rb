@@ -9,13 +9,13 @@ module Protocol
 		module Methods
 			module Server
 				# Get information and statistics about the server.
-				# @see https://redis.io/commands/info
-				# @param section [String]
+				# See <https://redis.io/commands/info> for more details.
+				# @parameter section [String]
 				def info
 					metadata = {}
 					
-					call('INFO').each_line(Redis::Connection::CRLF) do |line|
-						key, value = line.split(':')
+					call("INFO").each_line(Redis::Connection::CRLF) do |line|
+						key, value = line.split(":")
 						
 						if value
 							metadata[key.to_sym] = value.chomp!
@@ -28,8 +28,8 @@ module Protocol
 				def client_info
 					metadata = {}
 					
-					call('CLIENT', 'INFO').split(/\s+/).each do |pair|
-						key, value = pair.split('=')
+					call("CLIENT", "INFO").split(/\s+/).each do |pair|
+						key, value = pair.split("=")
 						
 						if value
 							metadata[key.to_sym] = value
@@ -42,10 +42,10 @@ module Protocol
 				end
 				
 				# Remove all keys from the current database.
-				# @see https://redis.io/commands/flushdb
-				# @param async [Enum]
+				# See <https://redis.io/commands/flushdb> for more details.
+				# @parameter async [Enum]
 				def flushdb!
-					call('FLUSHDB')
+					call("FLUSHDB")
 				end
 			end
 		end

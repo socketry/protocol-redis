@@ -3,8 +3,8 @@
 # Released under the MIT License.
 # Copyright, 2023, by Samuel Williams.
 
-require 'protocol/redis/connection'
-require 'socket'
+require "protocol/redis/connection"
+require "socket"
 
 class Callable
 	def call(*arguments)

@@ -6,23 +6,23 @@
 # Copyright, 2021, by Daniel Evans.
 # Copyright, 2023, by Nick Burwell.
 
-require_relative 'methods/generic'
-require_relative 'methods/connection'
-require_relative 'methods/server'
-require_relative 'methods/cluster'
-require_relative 'methods/geospatial'
+require_relative "methods/generic"
+require_relative "methods/connection"
+require_relative "methods/server"
+require_relative "methods/cluster"
+require_relative "methods/geospatial"
 
-require_relative 'methods/counting'
+require_relative "methods/counting"
 
-require_relative 'methods/hashes'
-require_relative 'methods/lists'
-require_relative 'methods/scripting'
-require_relative 'methods/sets'
-require_relative 'methods/strings'
-require_relative 'methods/streams'
-require_relative 'methods/sorted_sets'
+require_relative "methods/hashes"
+require_relative "methods/lists"
+require_relative "methods/scripting"
+require_relative "methods/sets"
+require_relative "methods/strings"
+require_relative "methods/streams"
+require_relative "methods/sorted_sets"
 
-require_relative 'methods/pubsub'
+require_relative "methods/pubsub"
 
 module Protocol
 	module Redis

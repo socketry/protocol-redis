@@ -8,11 +8,11 @@ module Protocol
 		module Methods
 			module Pubsub
 				# Post a message to a channel.
-				# @see https://redis.io/commands/publish
-				# @param channel [String]
-				# @param message [String]
+				# See <https://redis.io/commands/publish> for more details.
+				# @parameter channel [String]
+				# @parameter message [String]
 				def publish(channel, message)
-					call('PUBLISH', channel, message)
+					call("PUBLISH", channel, message)
 				end
 			end
 		end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 # Released under the MIT License.
-# Copyright, 2019-2023, by Samuel Williams.
+# Copyright, 2019-2024, by Samuel Williams.
 # Copyright, 2021, by Daniel Evans.
 
-require 'protocol/redis/methods'
+require "protocol/redis/methods"
 
 describe Protocol::Redis::Methods do
 	with "included module" do

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 # Released under the MIT License.
-# Copyright, 2019-2023, by Samuel Williams.
+# Copyright, 2019-2024, by Samuel Williams.
 # Copyright, 2020, by Nakul Warrier.
 
-require 'methods_context'
-require 'protocol/redis/methods/strings'
+require "methods_context"
+require "protocol/redis/methods/strings"
 
 describe Protocol::Redis::Methods::Strings do
 	include_context MethodsContext, Protocol::Redis::Methods::Strings
 	
-	describe '#append' do
+	with "#append" do
 		let(:key) {"mykey"}
 		let(:value) {"UpdatedValue"}
 		
@@ -21,7 +21,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#bitcount' do
+	with "#bitcount" do
 		let(:key) {"mykey"}
 		
 		it "can generate correct arguments" do
@@ -31,7 +31,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#decr' do
+	with "#decr" do
 		let(:key) {"mykey"}
 		
 		it "can generate correct arguments" do
@@ -41,7 +41,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#decrby' do
+	with "#decrby" do
 		let(:key) {"mykey"}
 		let(:decrement) {4}
 		
@@ -52,7 +52,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#get' do
+	with "#get" do
 		let(:key) {"mykey"}
 		
 		it "can generate correct arguments" do
@@ -62,7 +62,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#getbit' do
+	with "#getbit" do
 		let(:key) {"mykey"}
 		let(:offset) {4}
 		
@@ -73,7 +73,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#getrange' do
+	with "#getrange" do
 		let(:key) {"mykey"}
 		let(:start_index) {0}
 		let(:end_index) {3}
@@ -85,7 +85,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#getset' do
+	with "#getset" do
 		let(:key) {"mykey"}
 		let(:value) {"newkey"}
 		
@@ -96,7 +96,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#incr' do
+	with "#incr" do
 		let(:key) {"mykey"}
 		
 		it "can generate correct arguments" do
@@ -106,7 +106,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#incrby' do
+	with "#incrby" do
 		let(:key) {"mykey"}
 		let(:increment) {3}
 		
@@ -117,7 +117,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#incrbyfloat' do
+	with "#incrbyfloat" do
 		let(:key) {"mykey"}
 		let(:increment) {3.5}
 		
@@ -128,7 +128,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#mget' do
+	with "#mget" do
 		let(:key1) {"mykey1"}
 		let(:key2) {"mykey2"}
 		
@@ -139,7 +139,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#mset' do
+	with "#mset" do
 		let(:pairs) {{"mykey1" => "myvalue1", "mykey2" => "myvalue2"}}
 		
 		it "can generate correct arguments" do
@@ -149,7 +149,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#msetnx' do
+	with "#msetnx" do
 		let(:pairs) {{"mykey1" => "myvalue1", "mykey2" => "myvalue2"}}
 		
 		it "can generate correct arguments" do
@@ -159,7 +159,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#psetex' do
+	with "#psetex" do
 		let(:key) {"mykey"}
 		let(:milliseconds) {1000}
 		let(:value) {"myvalue"}
@@ -171,7 +171,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#set' do
+	with "#set" do
 		let(:key) {"mykey"}
 		let(:value) {"newkey"}
 		
@@ -182,19 +182,19 @@ describe Protocol::Redis::Methods::Strings do
 		end
 		
 		it "can generate correct arguments with SECONDS EXPIRY and KEY EXISTS options" do
-			expect(object).to receive(:call).with("SET", key, value, 'EX', 60, 'XX')
+			expect(object).to receive(:call).with("SET", key, value, "EX", 60, "XX")
 			
 			object.set(key, value, update: true, seconds: 60)
 		end
 		
 		it "can generate correct arguments with MILLISECONDS EXPIRY and KEY NOT EXISTS options" do
-			expect(object).to receive(:call).with("SET", key, value, 'PX', 60, 'NX')
+			expect(object).to receive(:call).with("SET", key, value, "PX", 60, "NX")
 			
 			object.set(key, value, update: false, milliseconds: 60)
 		end
 	end
 	
-	describe '#setbit' do
+	with "#setbit" do
 		let(:key) {"mykey"}
 		let(:offset) {2}
 		let(:value) {"myvalue"}
@@ -206,7 +206,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#setex' do
+	with "#setex" do
 		let(:key) {"mykey"}
 		let(:seconds) {2}
 		let(:value) {"myvalue"}
@@ -218,7 +218,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#setnx' do
+	with "#setnx" do
 		let(:key) {"mykey"}
 		let(:value) {"myvalue"}
 		
@@ -229,7 +229,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#setrange' do
+	with "#setrange" do
 		let(:key) {"mykey"}
 		let(:offset) {2}
 		let(:value) {"myvalue"}
@@ -241,7 +241,7 @@ describe Protocol::Redis::Methods::Strings do
 		end
 	end
 	
-	describe '#strlen' do
+	with "#strlen" do
 		let(:key) {"mykey"}
 		
 		it "can generate correct arguments" do

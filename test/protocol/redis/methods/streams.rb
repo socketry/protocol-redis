@@ -2,15 +2,15 @@
 
 # Released under the MIT License.
 # Copyright, 2020, by Nakul Warrier.
-# Copyright, 2023, by Samuel Williams.
+# Copyright, 2023-2024, by Samuel Williams.
 
-require 'methods_context'
-require 'protocol/redis/methods/streams'
+require "methods_context"
+require "protocol/redis/methods/streams"
 
 describe Protocol::Redis::Methods::Streams do
 	include_context MethodsContext, Protocol::Redis::Methods::Streams
 	
-	describe '#xinfo' do
+	with "#xinfo" do
 		let(:stream) {"STREAM"}
 		let(:key) {"mystream"}
 		
@@ -21,7 +21,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xadd' do
+	with "#xadd" do
 		let(:key_name) {"mykey"}
 		let(:key) {"name"}
 		let(:value) {"sara"}
@@ -33,7 +33,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xtrim' do
+	with "#xtrim" do
 		let(:key_name) {"mykey"}
 		let(:value) {1000}
 		
@@ -44,7 +44,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xdel' do
+	with "#xdel" do
 		let(:key_name) {"mykey"}
 		let(:id) {"1000001234-0"}
 		
@@ -55,7 +55,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xrange' do
+	with "#xrange" do
 		let(:key_name) {"mykey"}
 		let(:id) {"1000001234-0"}
 		let(:count_value) {"1"}
@@ -67,7 +67,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xrevrange' do
+	with "#xrevrange" do
 		let(:key_name) {"mykey"}
 		let(:id) {"1000001234-0"}
 		let(:count_value) {"1"}
@@ -79,7 +79,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xlen' do
+	with "#xlen" do
 		let(:key) {"mystream"}
 		
 		it "can generate correct arguments" do
@@ -89,7 +89,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xread' do
+	with "#xread" do
 		let(:key_name) {"mykey"}
 		let(:id) {"1000001234-0"}
 		let(:count_value) {"1"}
@@ -101,7 +101,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xgroup' do
+	with "#xgroup" do
 		let(:key_name) {"mykey"}
 		let(:group_name) {"mygroup"}
 		
@@ -112,7 +112,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xreadgroup' do
+	with "#xreadgroup" do
 		let(:key_name) {"mykey"}
 		let(:id) {"1000001234-0"}
 		let(:count_value) {"1"}
@@ -126,7 +126,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xack' do
+	with "#xack" do
 		let(:key_name) {"mykey"}
 		let(:group_name) {"mygroup"}
 		let(:id) {"1000001234-0"}
@@ -138,7 +138,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xclaim' do
+	with "#xclaim" do
 		let(:key_name) {"mykey"}
 		let(:id) {"1000001234-0"}
 		let(:min_idle_time) {"360000"}
@@ -152,7 +152,7 @@ describe Protocol::Redis::Methods::Streams do
 		end
 	end
 	
-	describe '#xpending' do
+	with "#xpending" do
 		let(:key_name) {"mykey"}
 		let(:group_name) {"mygroup"}
 		

@@ -3,7 +3,7 @@
 # Released under the MIT License.
 # Copyright, 2019-2023, by Samuel Williams.
 
-require_relative 'error'
+require_relative "error"
 
 module Protocol
 	module Redis
@@ -79,7 +79,7 @@ module Protocol
 				token = line.slice!(0, 1)
 				
 				case token
-				when '$'
+				when "$"
 					length = line.to_i
 					
 					if length == -1
@@ -87,7 +87,7 @@ module Protocol
 					else
 						return read_data(length)
 					end
-				when '*'
+				when "*"
 					count = line.to_i
 					
 					# Null array (https://redis.io/topics/protocol#resp-arrays):
@@ -96,15 +96,15 @@ module Protocol
 					array = Array.new(count) {read_object}
 					
 					return array
-				when ':'
+				when ":"
 					return line.to_i
-				
-				when '-'
+					
+				when "-"
 					raise ServerError.new(line)
-				
-				when '+'
+					
+				when "+"
 					return line
-				
+					
 				else
 					@stream.flush
 					
@@ -115,9 +115,9 @@ module Protocol
 			end
 			
 			alias read_response read_object
-
+			
 			private
-
+			
 			# In the case of Redis, we do not want to perform a flush in every line,
 			# because each Redis command contains several lines. Flushing once per
 			# command is more efficient because it avoids unnecessary writes to the

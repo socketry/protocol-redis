@@ -4,40 +4,67 @@ Implements the RESP2 and [RESP3](https://github.com/antirez/RESP3) Redis protoco
 
 [![Development Status](https://github.com/socketry/protocol-redis/workflows/Test/badge.svg)](https://github.com/socketry/protocol-redis/actions?workflow=Test)
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-``` ruby
-gem 'protocol-redis'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install protocol-redis
-
 ## Usage
 
-``` ruby
-sockets = Socket.pair(Socket::PF_UNIX, Socket::SOCK_STREAM)
+Please see the [project documentation](https://socketry.github.io/protocol-redis/) for more details.
 
-client = Protocol::Redis::Connection.new(sockets.first)
-server = Protocol::Redis::Connection.new(sockets.last)
+  - [Getting Started](https://socketry.github.io/protocol-redis/guides/getting-started/index) - This guide explains how to use the `Protocol::Redis` gem to implement the RESP2 and RESP3 Redis protocols for low level client and server implementations.
 
-client.write_object("Hello World!")
-puts server.read_object
-# => "Hello World!"
-```
+## Releases
 
-## Development
+Please see the [project releases](https://socketry.github.io/protocol-redis/releases/index) for all releases.
 
-Run tests:
+### Unreleased
 
-    bundle exec bake test
+  - Add agent context.
+
+### v0.9.0
+
+  - Add support for `client info` command.
+
+### v0.8.1
+
+  - Fix HSCAN method implementation.
+
+### v0.8.0
+
+  - Add missing `hscan` method.
+  - Add `mapped_hmget` and `mapped_hmset` methods to match `redis-rb` gem interface.
+  - Add cluster methods to client.
+  - Make hashes methods compatible with redis-rb.
+
+### v0.7.0
+
+  - Add scripting methods to client and fix script interface.
+  - Include sets and streams in the protocol methods.
+  - Add support for essential `exists?` method.
+  - Prefer bake-gem for release management.
+
+### v0.6.1
+
+  - Add support for multi-argument auth.
+
+### v0.6.0
+
+  - Add relevant pubsub method group.
+
+### v0.5.1
+
+  - Add tests for info command, streams, and string methods.
+  - Use correct CRLF constant in server methods.
+  - Modernize gem configuration.
+
+### v0.5.0
+
+  - Add incomplete implementations of scripting, sets and streams.
+  - Merge existing sorted set implementations.
+  - Add `zrangebyscore` method.
+  - Improve argument management.
+  - Modernize testing infrastructure.
+
+### v0.4.2
+
+  - Prefer implicit returns and improve return value for `setnx`.
 
 ## Contributing
 

@@ -2,15 +2,15 @@
 
 # Released under the MIT License.
 # Copyright, 2023, by Nick Burwell.
-# Copyright, 2023, by Samuel Williams.
+# Copyright, 2023-2024, by Samuel Williams.
 
-require 'methods_context'
-require 'protocol/redis/methods/scripting'
+require "methods_context"
+require "protocol/redis/methods/scripting"
 
 describe Protocol::Redis::Methods::Scripting do
 	include_context MethodsContext, Protocol::Redis::Methods::Scripting
 	
-	describe '#eval' do
+	with "#eval" do
 		let(:script) {"scriptname"}
 		let(:key1) {"mykey1"}
 		let(:value1) {"myvalue1"}
@@ -30,7 +30,7 @@ describe Protocol::Redis::Methods::Scripting do
 		end
 	end
 	
-	describe '#evalsha' do
+	with "#evalsha" do
 		let(:sha1) {"scriptsha"}
 		let(:key1) {"mykey1"}
 		let(:value1) {"myvalue1"}
@@ -50,8 +50,8 @@ describe Protocol::Redis::Methods::Scripting do
 		end
 	end
 	
-	describe '#script' do
-		describe "#debug" do
+	with "#script" do
+		with "#debug" do
 			let(:mode) {"YES"}
 			
 			it "can generate correct arguments" do
@@ -67,7 +67,7 @@ describe Protocol::Redis::Methods::Scripting do
 			end
 		end
 		
-		describe "#exists" do
+		with "#exists" do
 			let(:sha1) {"2ef7bde608ce5404e97d5f042f95f89f1c232871"}
 			
 			it "can generate correct arguments" do
@@ -77,7 +77,7 @@ describe Protocol::Redis::Methods::Scripting do
 			end
 		end
 		
-		describe "#flush" do
+		with "#flush" do
 			let(:mode) {"ASYNC"}
 			
 			it "can generate correct arguments" do
@@ -87,7 +87,7 @@ describe Protocol::Redis::Methods::Scripting do
 			end
 		end
 		
-		describe "#kill" do
+		with "#kill" do
 			let(:sha1) {"2ef7bde608ce5404e97d5f042f95f89f1c232871"}
 			
 			it "can generate correct arguments" do
@@ -97,7 +97,7 @@ describe Protocol::Redis::Methods::Scripting do
 			end
 		end
 		
-		describe "#load" do
+		with "#load" do
 			let(:script) {"return 'Hello, world!'"}
 			
 			it "can generate correct arguments" do
