@@ -3,6 +3,7 @@
 ## Unreleased
 
   - Add agent context.
+  - 100% documentation and test coverage + minor bug fixes.
 
 ## v0.9.0
 
