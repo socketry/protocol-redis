@@ -3,11 +3,11 @@
 # Released under the MIT License.
 # Copyright, 2019-2023, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/counting"
 
 describe Protocol::Redis::Methods::Counting do
-	include_context MethodsContext, Protocol::Redis::Methods::Counting
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Counting
 	
 	let(:key_name) {"pftest"}
 	let(:dest_key) {"pfdest"}

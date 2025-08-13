@@ -3,11 +3,11 @@
 # Released under the MIT License.
 # Copyright, 2019-2023, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/geospatial"
 
 describe Protocol::Redis::Methods::Geospatial do
-	include_context MethodsContext, Protocol::Redis::Methods::Geospatial
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Geospatial
 	
 	let(:key_name) {"geo_key"}
 	let(:longitude) {13.361389}

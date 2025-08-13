@@ -3,11 +3,11 @@
 # Released under the MIT License.
 # Copyright, 2021-2023, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/connection"
 
 describe Protocol::Redis::Methods::Connection do
-	include_context MethodsContext, Protocol::Redis::Methods::Connection
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Connection
 	
 	let(:message) {"Hello, World!"}
 	

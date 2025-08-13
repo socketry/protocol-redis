@@ -4,11 +4,11 @@
 # Copyright, 2023, by Nick Burwell.
 # Copyright, 2024, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/cluster"
 
 describe Protocol::Redis::Methods::Cluster do
-	include_context MethodsContext, Protocol::Redis::Methods::Cluster
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Cluster
 	
 	with "#cluster" do
 		it "can generate correct arguments" do

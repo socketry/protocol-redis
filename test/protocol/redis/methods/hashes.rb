@@ -5,11 +5,11 @@
 # Copyright, 2023-2024, by Samuel Williams.
 # Copyright, 2023, by Nick Burwell.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/hashes"
 
 describe Protocol::Redis::Methods::Hashes do
-	include_context MethodsContext, Protocol::Redis::Methods::Hashes
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Hashes
 	
 	let(:hash_name) {"htest"}
 	let(:field_name) {"field"}

@@ -4,11 +4,11 @@
 # Copyright, 2019-2023, by Samuel Williams.
 # Copyright, 2020, by Salim Semaoune.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/lists"
 
 describe Protocol::Redis::Methods::Lists do
-	include_context MethodsContext, Protocol::Redis::Methods::Lists
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Lists
 	
 	let(:list_name) {"list_test"}
 	let(:source_list) {"source_list"}

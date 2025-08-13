@@ -4,11 +4,11 @@
 # Copyright, 2020, by Dimitry Chopey.
 # Copyright, 2020-2024, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/sorted_sets"
 
 describe Protocol::Redis::Methods::SortedSets do
-	include_context MethodsContext, Protocol::Redis::Methods::SortedSets
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::SortedSets
 	
 	let(:set_name) {"test"}
 	let(:set_name2) {"test2"}

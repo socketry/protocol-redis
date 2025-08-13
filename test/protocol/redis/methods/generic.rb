@@ -4,11 +4,11 @@
 # Copyright, 2021, by Troex Nevelin.
 # Copyright, 2023-2024, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/generic"
 
 describe Protocol::Redis::Methods::Generic do
-	include_context MethodsContext, Protocol::Redis::Methods::Generic
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Generic
 	
 	let(:key_name) {"mykey"}
 	let(:key_name2) {"yourkey"}

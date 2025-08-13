@@ -4,11 +4,11 @@
 # Copyright, 2020, by Nakul Warrier.
 # Copyright, 2023-2024, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/streams"
 
 describe Protocol::Redis::Methods::Streams do
-	include_context MethodsContext, Protocol::Redis::Methods::Streams
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Streams
 	
 	with "#xinfo" do
 		let(:stream) {"STREAM"}

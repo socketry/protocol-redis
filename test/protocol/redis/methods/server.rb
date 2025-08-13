@@ -4,11 +4,11 @@
 # Copyright, 2020, by David Ortiz.
 # Copyright, 2023-2024, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/server"
 
 describe Protocol::Redis::Methods::Server do
-	include_context MethodsContext, Protocol::Redis::Methods::Server
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Server
 	
 	with "#info" do
 		# This is an incomplete response but contains all we need for the test

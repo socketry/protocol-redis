@@ -4,11 +4,11 @@
 # Copyright, 2019-2024, by Samuel Williams.
 # Copyright, 2020, by Nakul Warrier.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/strings"
 
 describe Protocol::Redis::Methods::Strings do
-	include_context MethodsContext, Protocol::Redis::Methods::Strings
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Strings
 	
 	with "#append" do
 		let(:key) {"mykey"}

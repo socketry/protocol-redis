@@ -3,11 +3,11 @@
 # Released under the MIT License.
 # Copyright, 2020-2023, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/pubsub"
 
 describe Protocol::Redis::Methods::Pubsub do
-	include_context MethodsContext, Protocol::Redis::Methods::Pubsub
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Pubsub
 	
 	let(:channel) {"test_channel"}
 	let(:message) {"Hello, World!"}

@@ -3,11 +3,11 @@
 # Released under the MIT License.
 # Copyright, 2020-2023, by Samuel Williams.
 
-require "methods_context"
+require "protocol/redis/methods_context"
 require "protocol/redis/methods/sets"
 
 describe Protocol::Redis::Methods::Sets do
-	include_context MethodsContext, Protocol::Redis::Methods::Sets
+	include_context Protocol::Redis::MethodsContext, Protocol::Redis::Methods::Sets
 	
 	let(:set_name) {"set_test"}
 	let(:set_name2) {"set_test2"}
