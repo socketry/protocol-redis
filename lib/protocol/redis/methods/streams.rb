@@ -6,6 +6,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis streams.
 			module Streams
 				# Get information on streams and consumer groups. O(N) with N being the number of returned items for the subcommands CONSUMERS and GROUPS. The STREAM subcommand is O(log N) with N being the number of items in the stream.
 				# See <https://redis.io/commands/xinfo> for more details.

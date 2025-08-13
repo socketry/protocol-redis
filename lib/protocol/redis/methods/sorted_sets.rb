@@ -7,6 +7,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis sorted sets.
 			module SortedSets
 				# Remove and return the member with the lowest score from one or more sorted sets, or block until one is available. O(log(N)) with N being the number of elements in the sorted set.
 				# See <https://redis.io/commands/bzpopmin> for more details.
@@ -82,8 +83,8 @@ module Protocol
 				# Intersect multiple sorted sets and store the resulting sorted set in a new key. O(N*K)+O(M*log(M)) worst case with N being the smallest input sorted set, K being the number of input sorted sets and M being the number of elements in the resulting sorted set.
 				# See <https://redis.io/commands/zinterstore> for more details.
 				# @parameter destination [Key]
-				# @parameter keys [Array<Key>]
-				# @parameter weights [Array<Integer>]
+				# @parameter keys [Array(Key)]
+				# @parameter weights [Array(Integer)]
 				# @parameter aggregate [Enum] one of sum, min, max.
 				def zinterstore(destination, keys, weights = nil, aggregate: nil)
 					arguments = []
@@ -148,7 +149,7 @@ module Protocol
 				# @parameter key [Key]
 				# @parameter min [String]
 				# @parameter max [String]
-				# @parameter limit [Tuple<offset, count>] Limit the results to the specified `offset` and `count` items.
+				# @parameter limit [Tuple(offset, count)] Limit the results to the specified `offset` and `count` items.
 				def zrangebylex(key, min, max, limit: nil)
 					if limit
 						arguments = ["LIMIT", *limit]

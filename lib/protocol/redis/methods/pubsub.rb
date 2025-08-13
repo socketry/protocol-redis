@@ -6,6 +6,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis Pub/Sub.
 			module Pubsub
 				# Post a message to a channel.
 				# See <https://redis.io/commands/publish> for more details.

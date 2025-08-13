@@ -6,6 +6,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis connections.
 			module Connection
 				# Authenticate to the server.
 				# See <https://redis.io/commands/auth> for more details.

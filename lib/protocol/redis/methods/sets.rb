@@ -6,6 +6,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis sets.
 			module Sets
 				# Add one or more members to a set. O(1) for each element added, so O(N) to add N elements when the command is called with multiple arguments.
 				# See <https://redis.io/commands/sadd> for more details.

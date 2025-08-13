@@ -5,3 +5,10 @@
 
 require_relative "redis/version"
 require_relative "redis/connection"
+
+# @namespace
+module Protocol
+	# @namespace
+	module Redis
+	end
+end

@@ -8,6 +8,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis hashes.
 			module Hashes
 				# Get the number of fields in a hash. O(1).
 				# See <https://redis.io/commands/hlen> for more details.
@@ -70,7 +71,7 @@ module Protocol
 				# Get the values of all the given hash fields. O(N) where N is the number of fields being requested.
 				# See <https://redis.io/commands/hmget> for more details.
 				# @parameter key [Key]
-				# @parameter fields [Array<String>] array of fields
+				# @parameter fields [Array(String)] array of fields
 				# @returns [Array]
 				def hmget(key, *fields)
 					call("HMGET", key, *fields)
@@ -83,7 +84,7 @@ module Protocol
 				#     # => { "f1" => "v1", "f2" => "v2" }
 				#
 				# @parameter key [Key]
-				# @parameter fields [Array<String>] array of fields
+				# @parameter fields [Array(String)] array of fields
 				# @returns [Hash] a hash mapping the specified fields to their values
 				#
 				# See <#hmget> for more details.

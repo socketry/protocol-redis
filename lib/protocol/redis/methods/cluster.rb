@@ -7,6 +7,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis clusters.
 			module Cluster
 				# Sends the `CLUSTER *` command to random node and returns its reply.
 				# See <https://redis.io/commands/cluster-addslots/> for more details.
@@ -14,8 +15,8 @@ module Protocol
 				#   e.g. `:addslots`, `:delslots`, `:nodes`, `:replicas`, `:info`
 				#
 				# @returns [Object] depends on the subcommand provided
-				def cluster(subcommand, *args)
-					call("CLUSTER", subcommand.to_s, *args)
+				def cluster(subcommand, *arguments)
+					call("CLUSTER", subcommand.to_s, *arguments)
 				end
 				
 				# Sends `ASKING` command to random node and returns its reply.

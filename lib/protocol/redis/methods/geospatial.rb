@@ -6,6 +6,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis geospatial indexes.
 			module Geospatial
 				# Add one or more geospatial items in the geospatial index represented using a sorted set. O(log(N)) for each item added, where N is the number of elements in the sorted set.
 				# See <https://redis.io/commands/geoadd> for more details.

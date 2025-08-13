@@ -7,6 +7,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Mehtods for managing Redis scripting.
 			module Scripting
 				# Execute a Lua script server side. Depends on the script that is executed.
 				# See <https://redis.io/commands/eval> for more details.
@@ -31,7 +32,7 @@ module Protocol
 				# Execute script management commands
 				# See <https://redis.io/commands/script/> for more details.
 				# @parameter subcommand [String] e.g. `debug`, `exists`, `flush`, `load`, `kill`
-				# @parameter [Array<String>] args depends on the subcommand provided
+				# @parameter [Array(String)] arguments depends on the subcommand provided
 				def script(subcommand, *arguments)
 					call("SCRIPT", subcommand.to_s, *arguments)
 				end

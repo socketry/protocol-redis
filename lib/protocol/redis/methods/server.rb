@@ -7,6 +7,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis servers.
 			module Server
 				# Get information and statistics about the server.
 				# See <https://redis.io/commands/info> for more details.

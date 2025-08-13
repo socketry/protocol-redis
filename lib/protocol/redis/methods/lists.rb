@@ -7,6 +7,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis lists.
 			module Lists
 				# Remove and get the first element in a list, or block until one is available. O(1).
 				# See <https://redis.io/commands/blpop> for more details.

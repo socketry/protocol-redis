@@ -6,6 +6,7 @@
 module Protocol
 	module Redis
 		module Methods
+			# Methods for managing Redis HyperLogLogs.
 			module Counting
 				# Adds the specified elements to the specified HyperLogLog. O(1) to add every element.
 				# See <https://redis.io/commands/pfadd> for more details.
