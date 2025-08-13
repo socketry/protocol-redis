@@ -4,6 +4,7 @@
 # Copyright, 2025, by Samuel Williams.
 
 require_relative "methods/generic"
+require_relative "methods/pubsub"
 
 module Protocol
 	module Redis
@@ -13,6 +14,7 @@ module Protocol
 				# Includes all Redis methods into the given class.
 				def self.included(klass)
 					klass.include Methods::Generic
+					klass.include Methods::Pubsub
 				end
 			end
 		end
