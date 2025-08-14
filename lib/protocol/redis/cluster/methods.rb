@@ -5,6 +5,7 @@
 
 require_relative "methods/generic"
 require_relative "methods/pubsub"
+require_relative "methods/streams"
 
 module Protocol
 	module Redis
@@ -15,6 +16,7 @@ module Protocol
 				def self.included(klass)
 					klass.include Methods::Generic
 					klass.include Methods::Pubsub
+					klass.include Methods::Streams
 				end
 			end
 		end

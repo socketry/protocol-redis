@@ -36,6 +36,10 @@ module Protocol
 						yield client_for(slot, role), keys
 					end
 				end
+				
+				def any_client(role = :master)
+					return self
+				end
 			end
 			
 			MethodsContext = Sus::Shared("a methods object") do |*modules|
