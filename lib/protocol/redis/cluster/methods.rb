@@ -6,6 +6,7 @@
 require_relative "methods/generic"
 require_relative "methods/pubsub"
 require_relative "methods/streams"
+require_relative "methods/strings"
 
 module Protocol
 	module Redis
@@ -17,6 +18,7 @@ module Protocol
 					klass.include Methods::Generic
 					klass.include Methods::Pubsub
 					klass.include Methods::Streams
+					klass.include Methods::Strings
 				end
 			end
 		end
