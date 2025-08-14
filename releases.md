@@ -1,5 +1,9 @@
 # Releases
 
+## Unreleased
+
+  - Introduce cluster methods, including `Strings`, `Streams`, `Scripting` and `Pubsub`.
+
 ## v0.10.0
 
   - Add agent context.
