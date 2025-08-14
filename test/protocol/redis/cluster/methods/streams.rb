@@ -20,6 +20,12 @@ describe Protocol::Redis::Cluster::Methods::Streams do
 			
 			expect(object.xinfo("STREAM", stream_key)).to be == []
 		end
+		
+		it "can handle commands without specific keys" do
+			expect(object).to receive(:call).with("XINFO", "HELP").and_return([])
+			
+			expect(object.xinfo("HELP")).to be == []
+		end
 	end
 	
 	with "#xadd" do
@@ -76,6 +82,12 @@ describe Protocol::Redis::Cluster::Methods::Streams do
 			
 			expect(object.xread("STREAMS", stream_key, "0")).to be == []
 		end
+		
+		it "can handle commands without STREAMS keyword" do
+			expect(object).to receive(:call).with("XREAD", "COUNT", "10").and_return([])
+			
+			expect(object.xread("COUNT", "10")).to be == []
+		end
 	end
 	
 	with "#xgroup" do
@@ -84,6 +96,18 @@ describe Protocol::Redis::Cluster::Methods::Streams do
 			
 			expect(object.xgroup("CREATE", stream_key, group_name, "$")).to be == "OK"
 		end
+		
+		it "can handle destroy operations" do
+			expect(object).to receive(:call).with("XGROUP", "DESTROY", stream_key, group_name).and_return(1)
+			
+			expect(object.xgroup("DESTROY", stream_key, group_name)).to be == 1
+		end
+		
+		it "can handle commands without specific keys" do
+			expect(object).to receive(:call).with("XGROUP", "HELP").and_return([])
+			
+			expect(object.xgroup("HELP")).to be == []
+		end
 	end
 	
 	with "#xreadgroup" do
@@ -91,6 +115,12 @@ describe Protocol::Redis::Cluster::Methods::Streams do
 			expect(object).to receive(:call).with("XREADGROUP", "GROUP", group_name, consumer_name, "STREAMS", stream_key, ">").and_return([])
 			
 			expect(object.xreadgroup("GROUP", group_name, consumer_name, "STREAMS", stream_key, ">")).to be == []
+		end
+		
+		it "can handle commands without STREAMS keyword" do
+			expect(object).to receive(:call).with("XREADGROUP", "GROUP", group_name, consumer_name, "COUNT", "10").and_return([])
+			
+			expect(object.xreadgroup("GROUP", group_name, consumer_name, "COUNT", "10")).to be == []
 		end
 	end
 	

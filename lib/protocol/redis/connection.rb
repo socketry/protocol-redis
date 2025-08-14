@@ -137,7 +137,7 @@ module Protocol
 				else
 					@stream.flush
 					
-					raise NotImplementedError, "Implementation for token #{token} missing"
+					raise UnknownTokenError, token.inspect
 				end
 				
 				# TODO: If an exception (e.g. Async::TimeoutError) propagates out of this function, perhaps @stream should be closed? Otherwise it might be in a weird state.

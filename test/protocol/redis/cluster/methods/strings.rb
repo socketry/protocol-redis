@@ -157,6 +157,18 @@ describe Protocol::Redis::Cluster::Methods::Strings do
 			
 			expect(object.set(key, value, update: true, seconds: 60)).to be == "OK"
 		end
+		
+		it "can set with milliseconds expiration" do
+			expect(object).to receive(:call).with("SET", key, value, "PX", 1000).and_return("OK")
+			
+			expect(object.set(key, value, milliseconds: 1000)).to be == "OK"
+		end
+		
+		it "can set with NX option" do
+			expect(object).to receive(:call).with("SET", key, value, "NX").and_return("OK")
+			
+			expect(object.set(key, value, update: false)).to be == "OK"
+		end
 	end
 	
 	with "#setbit" do

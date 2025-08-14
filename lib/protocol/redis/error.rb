@@ -12,5 +12,9 @@ module Protocol
 		# Represents an error response from the Redis server.
 		class ServerError < Error
 		end
+		
+		# Represents an unknown token error in the Redis protocol.
+		class UnknownTokenError < Error
+		end
 	end
 end

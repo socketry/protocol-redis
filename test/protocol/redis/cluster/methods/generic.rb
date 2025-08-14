@@ -54,4 +54,16 @@ describe Protocol::Redis::Cluster::Methods::Generic do
 			expect(object.exists("key1")).to be == 1
 		end
 	end
+	
+	with "#mget" do
+		it "returns empty array for no keys" do
+			expect(object.mget).to be == []
+		end
+		
+		it "can get multiple keys" do
+			expect(object).to receive(:call).with("MGET", "key1", "key2").and_return(["value1", "value2"])
+			
+			expect(object.mget("key1", "key2")).to be == ["value1", "value2"]
+		end
+	end
 end
