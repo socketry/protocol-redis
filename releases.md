@@ -1,5 +1,9 @@
 # Releases
 
+## Unreleased
+
+  - Introduce `Pubsub#spublish` method for shard channels.
+
 ## v0.11.0
 
   - Introduce cluster methods, including `Strings`, `Streams`, `Scripting` and `Pubsub`.

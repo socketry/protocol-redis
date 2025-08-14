@@ -19,4 +19,12 @@ describe Protocol::Redis::Methods::Pubsub do
 			expect(object.publish(channel, message)).to be == 1
 		end
 	end
+	
+	with "#spublish" do
+		it "can generate correct arguments" do
+			expect(object).to receive(:call).with("SPUBLISH", channel, message).and_return(1)
+			
+			expect(object.spublish(channel, message)).to be == 1
+		end
+	end
 end

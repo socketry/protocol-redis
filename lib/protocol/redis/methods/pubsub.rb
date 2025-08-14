@@ -15,6 +15,14 @@ module Protocol
 				def publish(channel, message)
 					call("PUBLISH", channel, message)
 				end
+				
+				# Post a message to a shard channel.
+				# See <https://redis.io/commands/spublish> for more details.
+				# @parameter channel [String]
+				# @parameter message [String]
+				def spublish(channel, message)
+					call("SPUBLISH", channel, message)
+				end
 			end
 		end
 	end
