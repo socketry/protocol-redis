@@ -7,32 +7,30 @@
 module Protocol
 	module Redis
 		module Methods
-			# Mehtods for managing Redis scripting.
+			# Methods for managing Redis scripting.
 			module Scripting
-				# Execute a Lua script server side. Depends on the script that is executed.
-				# See <https://redis.io/commands/eval> for more details.
-				# @parameter script [String]
-				# @parameter numkeys [Integer]
-				# @parameter key [Key] Multiple keys are supported, as long as the same number of values are also provided
-				# @parameter arg [String]
-				def eval(*arguments)
-					call("EVAL", *arguments)
+				# Execute a Lua script server side.
+				# @parameter script [String] The Lua script to execute.
+				# @parameter key_count [Integer] Number of keys that follow.
+				# @parameter keys_and_args [Array] Keys followed by arguments to the script.
+				# @returns [Object] The result of the script execution.
+				def eval(script, key_count = 0, *keys_and_args)
+					call("EVAL", script, key_count, *keys_and_args)
 				end
 				
-				# Execute a Lua script server side. Depends on the script that is executed.
-				# See <https://redis.io/commands/evalsha> for more details.
-				# @parameter sha1 [String]
-				# @parameter numkeys [Integer]
-				# @parameter key [Key]
-				# @parameter arg [String]
-				def evalsha(*arguments)
-					call("EVALSHA", *arguments)
+				# Execute a cached Lua script by SHA1 digest.
+				# @parameter sha1 [String] The SHA1 digest of the script to execute.
+				# @parameter key_count [Integer] Number of keys that follow.
+				# @parameter keys_and_args [Array] Keys followed by arguments to the script.
+				# @returns [Object] The result of the script execution.
+				def evalsha(sha1, key_count = 0, *keys_and_args)
+					call("EVALSHA", sha1, key_count, *keys_and_args)
 				end
 				
-				# Execute script management commands
-				# See <https://redis.io/commands/script/> for more details.
-				# @parameter subcommand [String] e.g. `debug`, `exists`, `flush`, `load`, `kill`
-				# @parameter [Array(String)] arguments depends on the subcommand provided
+				# Execute script management commands.
+				# @parameter subcommand [String|Symbol] The script subcommand (debug, exists, flush, load, kill).
+				# @parameter arguments [Array] Additional arguments for the subcommand.
+				# @returns [Object] The result of the script command.
 				def script(subcommand, *arguments)
 					call("SCRIPT", subcommand.to_s, *arguments)
 				end

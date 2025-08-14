@@ -103,9 +103,11 @@ module Protocol
 				# Set multiple keys to multiple values. O(N) where N is the number of keys to set.
 				# See <https://redis.io/commands/mset> for more details.
 				def mset(pairs)
-					flattened_pairs = pairs.keys.zip(pairs.values).flatten
+					if pairs.is_a?(Hash)
+						pairs = pairs.to_a.flatten
+					end
 					
-					call("MSET", *flattened_pairs)
+					call("MSET", *pairs)
 				end
 				
 				# Set multiple keys to multiple values, only if none of the keys exist. O(N) where N is the number of keys to set.

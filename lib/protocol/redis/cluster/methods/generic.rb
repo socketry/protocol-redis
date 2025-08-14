@@ -42,23 +42,6 @@ module Protocol
 						return count
 					end
 					
-					# Return all keys matching a pattern across the cluster.
-					# Note: Using KEYS in production on a cluster is discouraged due to performance.
-					# @parameter pattern [String] The pattern to match keys.
-					# @parameter role [Symbol] The role of node to use (`:master` or `:slave`).
-					# @parameter options [Hash] Additional options passed to the client.
-					# @returns [Array(String)] All matching keys from all shards.
-					def keys(pattern = "*", role: :master, **options)
-						results = []
-						
-						@shards.each do |slot, nodes|
-							client = client_for(slot, role)
-							results.concat(client.call("KEYS", pattern))
-						end
-						
-						return results
-					end
-					
 					# Get the values of multiple keys from the cluster.
 					# @parameter keys [Array(String)] The keys to fetch.
 					# @parameter role [Symbol] The role of node to use (`:master` or `:slave`).

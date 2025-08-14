@@ -159,28 +159,25 @@ module Protocol
 					end
 					
 					# Set multiple keys to multiple values.
-					# Note: In cluster mode, all keys must hash to the same slot.
+					# Redis will return a CROSSSLOT error if keys span multiple slots.
 					# @parameter pairs [Hash] The key-value pairs to set.
 					# @parameter role [Symbol] The role of node to use (`:master` or `:slave`).
 					# @returns [String] Status reply.
 					def mset(pairs, role: :master)
-						keys = pairs.keys
-						return if keys.empty?
+						return if pairs.empty?
 						
-						# Check that all keys hash to the same slot:
-						first_slot = slot_for(keys.first)
-						unless keys.all? { |key| slot_for(key) == first_slot }
-							raise ArgumentError, "MSET in cluster mode requires all keys to hash to the same slot"
+						if pairs.is_a?(Hash)
+							pairs = pairs.to_a.flatten
 						end
 						
-						flattened_pairs = pairs.keys.zip(pairs.values).flatten
-						client = client_for(first_slot, role)
+						slot = slot_for(pairs.first)
+						client = client_for(slot, role)
 						
-						return client.call("MSET", *flattened_pairs)
+						return client.call("MSET", *pairs)
 					end
 					
 					# Set multiple keys to multiple values, only if none exist.
-					# Note: In cluster mode, all keys must hash to the same slot.
+					# Redis will return a CROSSSLOT error if keys span multiple slots.
 					# @parameter pairs [Hash] The key-value pairs to set.
 					# @parameter role [Symbol] The role of node to use (`:master` or `:slave`).
 					# @returns [Integer] 1 if all keys were set, 0 otherwise.
@@ -188,14 +185,9 @@ module Protocol
 						keys = pairs.keys
 						return 0 if keys.empty?
 						
-						# Check that all keys hash to the same slot:
-						first_slot = slot_for(keys.first)
-						unless keys.all? { |key| slot_for(key) == first_slot }
-							raise ArgumentError, "MSETNX in cluster mode requires all keys to hash to the same slot"
-						end
-						
 						flattened_pairs = pairs.keys.zip(pairs.values).flatten
-						client = client_for(first_slot, role)
+						slot = slot_for(keys.first)
+						client = client_for(slot, role)
 						
 						return client.call("MSETNX", *flattened_pairs)
 					end
