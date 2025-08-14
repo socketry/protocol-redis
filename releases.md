@@ -1,6 +1,6 @@
 # Releases
 
-## Unreleased
+## v0.12.0
 
   - Introduce `Pubsub#spublish` method for shard channels.
 

@@ -14,6 +14,10 @@ Please see the [project documentation](https://socketry.github.io/protocol-redis
 
 Please see the [project releases](https://socketry.github.io/protocol-redis/releases/index) for all releases.
 
+### v0.12.0
+
+  - Introduce `Pubsub#spublish` method for shard channels.
+
 ### v0.11.0
 
   - Introduce cluster methods, including `Strings`, `Streams`, `Scripting` and `Pubsub`.
@@ -58,14 +62,6 @@ Please see the [project releases](https://socketry.github.io/protocol-redis/rele
   - Add tests for info command, streams, and string methods.
   - Use correct CRLF constant in server methods.
   - Modernize gem configuration.
-
-### v0.5.0
-
-  - Add incomplete implementations of scripting, sets and streams.
-  - Merge existing sorted set implementations.
-  - Add `zrangebyscore` method.
-  - Improve argument management.
-  - Modernize testing infrastructure.
 
 ## Contributing
 
