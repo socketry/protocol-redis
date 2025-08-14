@@ -10,8 +10,9 @@ require_relative "methods/strings"
 
 module Protocol
 	module Redis
+		# @namespace
 		module Cluster
-			# A collection of methods for interacting with Redis.
+			# A collection of methods for interacting with Redis in cluster mode.
 			module Methods
 				# Includes all Redis methods into the given class.
 				def self.included(klass)
