@@ -14,6 +14,10 @@ Please see the [project documentation](https://socketry.github.io/protocol-redis
 
 Please see the [project releases](https://socketry.github.io/protocol-redis/releases/index) for all releases.
 
+### v0.11.0
+
+  - Introduce cluster methods, including `Strings`, `Streams`, `Scripting` and `Pubsub`.
+
 ### v0.10.0
 
   - Add agent context.
@@ -62,10 +66,6 @@ Please see the [project releases](https://socketry.github.io/protocol-redis/rele
   - Add `zrangebyscore` method.
   - Improve argument management.
   - Modernize testing infrastructure.
-
-### v0.4.2
-
-  - Prefer implicit returns and improve return value for `setnx`.
 
 ## Contributing
 

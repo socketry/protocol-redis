@@ -1,6 +1,6 @@
 # Releases
 
-## Unreleased
+## v0.11.0
 
   - Introduce cluster methods, including `Strings`, `Streams`, `Scripting` and `Pubsub`.
 
