@@ -2,7 +2,7 @@
 
 # Released under the MIT License.
 # Copyright, 2020, by Dimitry Chopey.
-# Copyright, 2020-2024, by Samuel Williams.
+# Copyright, 2020-2025, by Samuel Williams.
 
 require "protocol/redis/methods_context"
 require "protocol/redis/methods/sorted_sets"

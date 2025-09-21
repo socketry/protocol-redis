@@ -2,7 +2,7 @@
 
 # Released under the MIT License.
 # Copyright, 2023, by Nick Burwell.
-# Copyright, 2023-2024, by Samuel Williams.
+# Copyright, 2023-2025, by Samuel Williams.
 
 require "protocol/redis/methods_context"
 require "protocol/redis/methods/scripting"

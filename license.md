@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright, 2019-2024, by Samuel Williams.  
+Copyright, 2019-2025, by Samuel Williams.  
 Copyright, 2020, by Olle Jonsson.  
 Copyright, 2020, by Salim Semaoune.  
 Copyright, 2020, by Dimitry Chopey.  
