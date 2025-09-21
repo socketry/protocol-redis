@@ -150,9 +150,11 @@ module Protocol
 				# Get all the fields and values in a hash. O(N) where N is the size of the hash.
 				# See <https://redis.io/commands/hgetall> for more details.
 				# @parameter key [Key]
-				# @returns [Hash]
+				# @returns [Hash | Nil]
 				def hgetall(key)
-					call("HGETALL", key).each_slice(2).to_h
+					if pairs = call("HGETALL", key)
+						pairs.each_slice(2).to_h
+					end
 				end
 				
 				# Iterates fields of Hash types and their associated values. O(1) for every call. O(N) for a complete iteration, including enough command calls for the cursor to return back to 0. N is the number of elements inside the collection.

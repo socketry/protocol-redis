@@ -1,5 +1,9 @@
 # Releases
 
+## Unreleased
+
+	- Handle `nil` return value in `hgetall` method.
+
 ## v0.12.0
 
   - Introduce `Pubsub#spublish` method for shard channels.

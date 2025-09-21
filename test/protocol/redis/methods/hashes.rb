@@ -142,6 +142,12 @@ describe Protocol::Redis::Methods::Hashes do
 			
 			expect(object.hgetall(hash_name)).to be == {field_name => value, "test" => "1"}
 		end
+		
+		it "returns nil when call returns nil (e.g., in pipeline)" do
+			expect(object).to receive(:call).with("HGETALL", hash_name).and_return(nil)
+			
+			expect(object.hgetall(hash_name)).to be_nil
+		end
 	end
 	
 	with "#hscan" do
