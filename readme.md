@@ -14,6 +14,10 @@ Please see the [project documentation](https://socketry.github.io/protocol-redis
 
 Please see the [project releases](https://socketry.github.io/protocol-redis/releases/index) for all releases.
 
+### v0.13.0
+
+    - Handle `nil` return value in `hgetall` method.
+
 ### v0.12.0
 
   - Introduce `Pubsub#spublish` method for shard channels.
@@ -56,12 +60,6 @@ Please see the [project releases](https://socketry.github.io/protocol-redis/rele
 ### v0.6.0
 
   - Add relevant pubsub method group.
-
-### v0.5.1
-
-  - Add tests for info command, streams, and string methods.
-  - Use correct CRLF constant in server methods.
-  - Modernize gem configuration.
 
 ## Contributing
 

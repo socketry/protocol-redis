@@ -1,8 +1,8 @@
 # Releases
 
-## Unreleased
+## v0.13.0
 
-	- Handle `nil` return value in `hgetall` method.
+    - Handle `nil` return value in `hgetall` method.
 
 ## v0.12.0
 
