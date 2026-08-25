@@ -103,8 +103,12 @@ module Protocol
 			# @raises [ServerError] If the server returns an error response.
 			# @raises [EOFError] If the stream reaches end of file.
 			def read_object
-				line = read_line or raise EOFError
+				# Whether the current response was fully consumed:
+				complete = false
+				object = nil
 				
+				# The line that we are processing:
+				line = read_line or raise EOFError
 				token = line.slice!(0, 1)
 				
 				case token
@@ -112,35 +116,40 @@ module Protocol
 					length = line.to_i
 					
 					if length == -1
-						return nil
+						# No data.
 					else
-						return read_data(length)
+						object = read_data(length)
 					end
+					
+					complete = true
 				when "*"
 					count = line.to_i
 					
-					# Null array (https://redis.io/topics/protocol#resp-arrays):
-					return nil if count == -1
+					if count == -1
+						# Null array (https://redis.io/topics/protocol#resp-arrays).
+					else
+						object = Array.new(count){read_object}
+					end
 					
-					array = Array.new(count){read_object}
-					
-					return array
+					complete = true
 				when ":"
-					return line.to_i
-					
+					object = line.to_i
+					complete = true
 				when "-"
+					complete = true
 					raise ServerError.new(line)
-					
 				when "+"
-					return line
-					
+					object = line
+					complete = true
 				else
 					@stream.flush
 					
 					raise UnknownTokenError, token.inspect
 				end
 				
-				# TODO: If an exception (e.g. Async::TimeoutError) propagates out of this function, perhaps @stream should be closed? Otherwise it might be in a weird state.
+				return object
+			ensure
+				close unless complete
 			end
 			
 			alias read_response read_object
