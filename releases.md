@@ -1,6 +1,6 @@
 # Releases
 
-## Unreleased
+## v0.13.1
 
   - Close connections when reading a response fails before it is fully consumed.
 

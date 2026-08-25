@@ -14,6 +14,10 @@ Please see the [project documentation](https://socketry.github.io/protocol-redis
 
 Please see the [project releases](https://socketry.github.io/protocol-redis/releases/index) for all releases.
 
+### v0.13.1
+
+  - Close connections when reading a response fails before it is fully consumed.
+
 ### v0.13.0
 
     - Handle `nil` return value in `hgetall` method.
@@ -56,10 +60,6 @@ Please see the [project releases](https://socketry.github.io/protocol-redis/rele
 ### v0.6.1
 
   - Add support for multi-argument auth.
-
-### v0.6.0
-
-  - Add relevant pubsub method group.
 
 ## Contributing
 

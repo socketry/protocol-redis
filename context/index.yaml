@@ -3,6 +3,8 @@
 ---
 description: A transport agnostic RESP protocol client/server.
 metadata:
+  bug_tracker_uri: https://github.com/socketry/protocol-redis/issues
+  changelog_uri: https://github.com/socketry/protocol-redis/blob/main/releases.md
   documentation_uri: https://socketry.github.io/protocol-redis/
   funding_uri: https://github.com/sponsors/ioquatix
   source_code_uri: https://github.com/socketry/protocol-redis.git
